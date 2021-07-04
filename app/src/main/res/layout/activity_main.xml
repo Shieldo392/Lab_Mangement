@@ -265,7 +265,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Đăng ký phòng máy"
+                        android:text="Đăng ký thực hành"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -303,7 +303,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Danh sách Phòng máy"
+                        android:text="Quản lý thiết bị"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -334,7 +334,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Quản lý phòng máy"
+                        android:text="Danh sách buổi học"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -365,7 +365,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Đăng ký phòng máy"
+                        android:text="Thống kê phòng học"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -403,7 +403,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Danh sách Phòng máy"
+                        android:text="Thống kê giáo viên"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
