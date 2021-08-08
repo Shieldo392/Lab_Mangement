@@ -3,12 +3,26 @@ package com.example.lab_management.objects;
 public class Device {
     private int deviceID;
     private String deviceName;
-    private int deviceCount;
+    private String type;
+    private boolean status;
 
-    public Device(int deviceID, String deviceName, int deviceCount) {
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public Device(int deviceID, String deviceName, String type, boolean status) {
         this.deviceID = deviceID;
         this.deviceName = deviceName;
-        this.deviceCount = deviceCount;
+        this.type = type;
+        this.status = status;
     }
 
     public int getDeviceID() {
@@ -27,11 +41,11 @@ public class Device {
         this.deviceName = deviceName;
     }
 
-    public int getDeviceCount() {
-        return deviceCount;
+    public boolean getStatus() {
+        return status;
     }
 
-    public void setDeviceCount(int deviceCount) {
-        this.deviceCount = deviceCount;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
