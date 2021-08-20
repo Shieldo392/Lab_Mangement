@@ -9,7 +9,12 @@
         android:roundIcon="@drawable/logo_haui"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".login.LoginActivity"
+        <activity android:name=".SignUp"></activity>
+        <activity android:name=".manage_verify.ListVerify" />
+        <activity android:name=".manage_verify.EditVerify" />
+        <activity android:name=".manage_verify.AddNewVerify" />
+        <activity
+            android:name=".login.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

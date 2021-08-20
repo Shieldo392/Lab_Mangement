@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+    tools:context=".manage_verify.AddNewVerify">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_700"
+            android:textColor="@color/white"
+            android:text="Quản lý thông tin Phiếu xác nhận"/>
+        <TableLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="120dp"
+                    android:textColor="@color/black"
+                    android:text="Mã Phòng"/>
+                <Spinner
+                    android:textAlignment="viewStart"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:id="@+id/sp_maPhong"
+                    android:gravity="start" />
+            </TableRow>
+            <!--<TableRow
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_width="120dp"
+                    android:textColor="@color/black"
+                    android:text="Mã phiếu"/>
+                <TextView
+                    android:gravity="left"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_weight="1"
+                    android:id="@+id/edt_ma"/>
+            </TableRow>-->
+
+            <TableRow
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="100dp"
+                    android:textColor="@color/black"
+                    android:text="Tên giảng viên"/>
+                <Spinner
+                    android:textAlignment="viewStart"
+                    android:layout_height="30dp"
+                    android:layout_weight="1"
+                    android:id="@+id/sp_giangVien"
+                    android:gravity="start" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="100dp"
+                    android:textColor="@color/black"
+                    android:text="Ca làm việc"/>
+                <RadioGroup
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sáng"
+                        android:id="@+id/rad_sang"
+                        android:layout_marginRight="20dp"/>
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chiều"
+                        android:id="@+id/rad_chieu"/>
+
+                </RadioGroup>
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="100dp"
+                    android:textColor="@color/black"
+                    android:text="Thời gian"/>
+                <TextView
+                    android:textColor="@color/black"
+                    android:gravity="left"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:id="@+id/edt_thoiGian"
+                    android:text=""/>
+                <ImageButton
+                    android:id="@+id/btn_time"
+                    android:src="@drawable/calendar"/>
+
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="Xác nhận thiết bị"/>
+                <ListView
+                    android:id="@+id/lv_device"
+                    android:layout_column="1"
+                    android:layout_width="250dp"
+                    android:layout_height="200dp"/>
+
+            </TableRow>
+            <TableRow
+                android:layout_marginBottom="15dp">
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:layout_width="120dp"
+                    android:textColor="@color/black"
+                    android:text="Ghi chú"/>
+                <EditText
+                    android:textAlignment="textStart"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:id="@+id/edt_note"
+                    android:gravity="start" />
+            </TableRow>
+
+
+        </TableLayout>
+    </LinearLayout>
+
+
+
+</androidx.core.widget.NestedScrollView>
