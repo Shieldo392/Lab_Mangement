@@ -1,8 +1,7 @@
-package lehao.com;
+package com.example.lab_management.objects;
 
 public class Device {
     private int maPhong = 1;
-    private String tenPhong;
     private int maTb = 1;
     private String tenTb;
     private String loaitb;
@@ -17,20 +16,19 @@ public class Device {
         this.tinhtrang = tinhtrang;
         this.ngaynhap = ngaynhap;
     }
-    public Device(String tenPhong, int maTb, String tenTb, String loaitb, String tinhtrang, String ngaynhap, String ghichu) {
+    public Device(int maTb, String tenTb, String loaitb,int maPhong ,String tinhtrang, String ngaynhap, String ghichu) {
 
-        this.tenPhong = tenPhong;
         this.maTb = maTb;
         this.tenTb = tenTb;
         this.loaitb = loaitb;
+        this.maPhong = maPhong;
         this.tinhtrang = tinhtrang;
         this.ngaynhap = ngaynhap;
         this.ghichu = ghichu;
     }
 
 
-    public Device(String tenPhong, String tenTb, String loaitb, String tinhtrang, String ngaynhap, String ghichu) {
-        this.tenPhong = tenPhong;
+    public Device( String tenTb, String loaitb, String tinhtrang, String ngaynhap, String ghichu) {
         this.tenTb = tenTb;
         this.loaitb = loaitb;
         this.tinhtrang = tinhtrang;
@@ -58,13 +56,6 @@ public class Device {
         this.maPhong = maPhong;
     }
 
-    public String getTenPhong() {
-        return tenPhong;
-    }
-
-    public void setTenPhong(String tenPhong) {
-        this.tenPhong = tenPhong;
-    }
 
     public int getMaTb() {
         return maTb;
@@ -109,7 +100,7 @@ public class Device {
 
     @Override
     public String toString(){
-        return "Tên phòng: "+tenPhong+"\n"+
+        return
                 "Tên thiết bị: "+tenTb+"\n"+
                 "Loại thiết bị: "+loaitb+"\n"+
                 "Tình trạng: "+ tinhtrang+"\n"+

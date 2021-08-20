@@ -12,6 +12,7 @@ public class User {
     private String address;
     private int type; //0: quan ly, 1: giang vien
 
+    public User(){};
     public User(int id_user, String userName, String password, String codeUser, String email, String fullName, String gender, String dateOfBirth, String address, int type) {
         this.id_user = id_user;
         this.userName = userName;
@@ -22,6 +23,14 @@ public class User {
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
+        this.type = type;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
         this.type = type;
     }
 

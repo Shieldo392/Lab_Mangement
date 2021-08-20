@@ -1,18 +1,43 @@
 package com.example.lab_management.objects;
 
-public class VerifyReport {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class VerifyReport implements Parcelable{
     private int id;
-    private int user_ID; // mã giảng viên
-    private String shift; //Ca làm việc
-    private int time; // Thứ làm việc (Thứ 2 -> chủ nhật) <=> (2-8)
+    private int maPhong;
+    private int user_id; // tên giảng viên
+    private boolean shift; //true: ca sáng, false: ca chiều
+    private String time; // Thứ làm việc (Thứ 2 -> chủ nhật) <=> (2-8)
     private String note;
 
-    public VerifyReport(int id, int userID, String shift, int time, String note) {
+    public VerifyReport(int id, int maPhong, int tenGV, boolean shift, String time, String note) {
         this.id = id;
-        this.user_ID = userID;
+        this.maPhong = maPhong;
+        this.user_id = tenGV;
         this.shift = shift;
         this.time = time;
         this.note = note;
+    }
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public boolean isShift() {
+        return shift;
+    }
+
+    public int getMaPhong() {
+        return maPhong;
+    }
+
+    public void setMaPhong(int maPhong) {
+        this.maPhong = maPhong;
     }
 
     public int getId() {
@@ -23,27 +48,27 @@ public class VerifyReport {
         this.id = id;
     }
 
-    public int getUser_ID() {
-        return user_ID;
+    public int getName() {
+        return user_id;
     }
 
     public void setUser_ID(int user_ID) {
-        this.user_ID = user_ID;
+        this.user_id = user_ID;
     }
 
-    public String getShift() {
+    public boolean getShift() {
         return shift;
     }
 
-    public void setShift(String shift) {
+    public void setShift(boolean shift) {
         this.shift = shift;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -54,4 +79,47 @@ public class VerifyReport {
     public void setNote(String note) {
         this.note = note;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+    /*private int id;
+    private int maPhong;
+    private int user_id; // tên giảng viên
+    private boolean shift; //true: ca sáng, false: ca chiều
+    private String time; // Thứ làm việc (Thứ 2 -> chủ nhật) <=> (2-8)
+    private String note;*/
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeInt(this.maPhong);
+        dest.writeInt(this.user_id);
+        dest.writeBoolean(this.shift);
+        dest.writeString(this.time);
+        dest.writeString(this.note);
+    }
+    public VerifyReport(Parcel in){
+        this.id = in.readInt();
+        this.maPhong = in.readInt();
+        this.user_id = in.readInt();
+        this.shift = in.readBoolean();
+        this.time = in.readString();
+        this.note = in.readString();
+
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        @Override
+        public Object createFromParcel(Parcel source) {
+            return new VerifyReport(source);
+        }
+
+        @Override
+        public Object[] newArray(int size) {
+            return new Object[0];
+        }
+    };
+
 }
