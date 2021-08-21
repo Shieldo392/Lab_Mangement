@@ -165,11 +165,23 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
             }
         });
 
-        sp_lab.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        /*sp_lab.setOnItemSelectedListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 deviceList = labs.get(position).getDeviceList();
                 deviceApdater.notifyDataSetChanged();
+            }
+        });*/
+        sp_lab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                deviceList = labs.get(position).getDeviceList();
+                deviceApdater.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 

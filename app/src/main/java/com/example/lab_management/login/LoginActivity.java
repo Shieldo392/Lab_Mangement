@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void fakeData() {
         FakeData.InsertUser(LoginActivity.this);
+        FakeData.InsertLab(LoginActivity.this);
     }
 
     public String checkUser(String user_check, String pass_check) {
