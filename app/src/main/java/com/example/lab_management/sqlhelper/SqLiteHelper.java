@@ -22,7 +22,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     //tbl_Lab
     public static final String TBL_LAB = "lab";
@@ -294,6 +294,22 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         long rowID = db.insert(TBL_USER, null, contentValues);
         db.close();
         return rowID;
+    }
+
+    public User GetUser(String username){
+        User user = new User();
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "select * from " + TBL_USER +" where " + USER_NAME +" = ?";
+        Cursor cursor= db.rawQuery(sql, new String[]{username});
+        if (cursor != null && cursor.moveToFirst()){
+            do{
+                String user_name = cursor.getString(cursor.getColumnIndex(USER_NAME));
+                String password = cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
+                user.setUserName(user_name);
+                user.setPassword(password);
+            }while (cursor.moveToNext());
+        }
+        return user;
     }
 
 

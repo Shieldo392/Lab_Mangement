@@ -15,7 +15,11 @@ import android.widget.Toast;
 
 import com.example.lab_management.MainActivity;
 import com.example.lab_management.R;
+import com.example.lab_management.objects.User;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
+import com.example.lab_management.utils.FakeData;
+
+import java.util.List;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -26,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         getWidget();
+        fakeData();
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,19 +66,20 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void fakeData() {
+        FakeData.InsertUser(LoginActivity.this);
+    }
+
     public String checkUser(String user_check, String pass_check) {
-        SQLiteDatabase db = openOrCreateDatabase(SqLiteHelper.Database_Name, Context.MODE_PRIVATE,null);
-        Cursor cursor = db.rawQuery("select * from USER where username = ? and password = ? ",new String[]{user_check,pass_check});
-        if(cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            String username = cursor.getString(1);
-            String password = cursor.getString(2);
-            SharedPreferences.Editor sp = getSharedPreferences("username",MODE_PRIVATE).edit();
-            sp.putString("user_name",username);
-            sp.apply();
-            cursor.close();
-            return username;
+        SqLiteHelper sqLiteHelper = SqLiteHelper.getInstance(LoginActivity.this);
+        User user = sqLiteHelper.GetUser(user_check);
+        List<User> users = sqLiteHelper.Get_User();
+
+        if(!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
+        {
+            return user_check;
         }
+
         return null;
     }
 
