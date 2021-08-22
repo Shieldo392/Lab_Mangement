@@ -47,7 +47,7 @@
             android:layout_height="25dp"
             android:layout_marginRight="10dp"
             android:src="@drawable/ic_baseline_notifications_24"
-            android:tint="@color/white" />
+            app:tint="@color/white" />
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
@@ -285,6 +285,7 @@
             <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
 
                 <LinearLayout
+                    android:id="@+id/ln_manage_verify_report"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
