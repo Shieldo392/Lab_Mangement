@@ -66,10 +66,12 @@ public class LoginActivity extends AppCompatActivity {
         Cursor cursor = db.rawQuery("select * from USER where username = ? and password = ? ",new String[]{user_check,pass_check});
         if(cursor.getCount() > 0) {
             cursor.moveToFirst();
+            int user_id = cursor.getInt(0);
             String username = cursor.getString(1);
             String password = cursor.getString(2);
             SharedPreferences.Editor sp = getSharedPreferences("username",MODE_PRIVATE).edit();
             sp.putString("user_name",username);
+            sp.putInt("user_id", user_id);
             sp.apply();
             cursor.close();
             return username;
