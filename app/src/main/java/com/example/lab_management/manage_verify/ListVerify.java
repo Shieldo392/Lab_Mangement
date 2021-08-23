@@ -119,6 +119,8 @@ public class ListVerify extends AppCompatActivity {
             list = sqliteHelper.Get_Verify();
             verifyAdapter.setList(list);
             verifyAdapter.notifyDataSetChanged();
+            if(list.size()>0)
+                imv_nodata.setVisibility(View.GONE);
         }
     }
 }

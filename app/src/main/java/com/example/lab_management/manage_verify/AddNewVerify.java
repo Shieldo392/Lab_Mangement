@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -51,6 +54,8 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
     UserAdapter adapter_spinner;
     LabArrayAdapter adapter_lab;
     EditText edt_note;
+    ImageButton imv_option_menu;
+    PopupMenu popupMenu = null;
 
     SqLiteHelper sqliteHelper = null;
     @Override
@@ -61,6 +66,7 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
         GetWidgets();
         setAdapter();
         setEvenOnClick();
+
 
     }
 
@@ -81,6 +87,7 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
         users = sqliteHelper.Get_User();
         adapter_spinner = new UserAdapter(this, R.layout.item_spinner, users);
         sp_giangVien.setAdapter(adapter_spinner);
+
 
         // verify report
        /* verifyReportArrayAdapter = new VerifyAdapter(this, R.layout.item_report, verifyReports);
@@ -110,6 +117,7 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
 
         lv_devices = findViewById(R.id.lv_device);
         edt_note = findViewById(R.id.edt_note);
+        imv_option_menu = findViewById(R.id.option_menu);
     }
 
     private void processAdd() {
@@ -185,6 +193,58 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
             }
         });
 
+        popupMenu = new PopupMenu(this, imv_option_menu);
+        popupMenu.inflate(R.menu.menu_add);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.mn_add:
+                        AlertDialog.Builder al = new AlertDialog.Builder(AddNewVerify.this)
+                                .setTitle("Xác nhận")
+                                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        return;
+                                    }
+                                })
+                                .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        processAdd();
+                                    }
+                                })
+                                .setMessage("Bạn có muốn thêm không?");
+                        al.show();
+
+                        break;
+                    case R.id.mn_cancel:
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewVerify.this)
+                                .setTitle("Message")
+                                .setMessage("Bạn có thực sự muốn hủy?")
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                .setNegativeButton(android.R.string.no, null);
+                        alertDialog.show();
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        imv_option_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
+            }
+        });
+
 
     }
 
@@ -194,49 +254,4 @@ public class AddNewVerify extends AppCompatActivity implements onStatusClick {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.mn_add:
-                AlertDialog.Builder al = new AlertDialog.Builder(AddNewVerify.this)
-                        .setTitle("Xác nhận")
-                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                return;
-                            }
-                        })
-                        .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                processAdd();
-                            }
-                        })
-                        .setMessage("Bạn có muốn thêm không?");
-                al.show();
-
-                break;
-            case R.id.mn_cancel:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddNewVerify.this)
-                        .setTitle("Message")
-                        .setMessage("Bạn có thực sự muốn hủy?")
-                        .setPositiveButton(android.R.string.yes,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                })
-                        .setNegativeButton(android.R.string.no, null);
-                alertDialog.show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
