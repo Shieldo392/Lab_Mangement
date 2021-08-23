@@ -383,6 +383,12 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
+    public int Delete_Device_By_ID(int id){
+        SQLiteDatabase db = getWritableDatabase();
+        int rowID = db.delete(TBL_DEVICE,"id=?",new String[]{id+""});
+        db.close();
+        return rowID;
+    }
     public int Delete_Verify_ALL() {
         SQLiteDatabase db = getWritableDatabase();
         int rowID = db.delete(TBL_VERIFY, null, null);

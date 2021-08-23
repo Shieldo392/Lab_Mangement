@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mn_add_device"
+        android:title="Thêm"/>
+    <item
+        android:id="@+id/mn_edit_device"
+        android:title="Sửa"/>
+    <item
+        android:id="@+id/mn_cancel_add_dv"
+        android:title="Hủy"/>
+</menu>
