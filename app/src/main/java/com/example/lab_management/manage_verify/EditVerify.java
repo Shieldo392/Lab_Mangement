@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -111,6 +112,19 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
                 DatePickerDialog dialog = new DatePickerDialog(EditVerify.this, callback, 2021, date.getMonth(), date.getDate());
                 dialog.setTitle("Chọn thời gian bắt đầu");
                 dialog.show();
+            }
+        });
+
+        sp_lab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                deviceList = labs.get(position).getDeviceList();
+                deviceApdater.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
 
