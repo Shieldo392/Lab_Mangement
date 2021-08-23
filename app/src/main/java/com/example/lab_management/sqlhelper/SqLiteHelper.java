@@ -22,12 +22,8 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
-    //tbl_Lab
-    public static final String TBL_LAB = "lab";
-    public static final String LAB_ID= "id";
-    public static final String LAB_NAME = "name";
 
 
 
@@ -53,10 +49,22 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     public static final String USER_ADDRESS = "address";
     public static final String USER_TYPE = "type";
 
+    //tbl_Lab
+    public static final String TBL_LAB = "lab";
+    public static final String LAB_ID= "id";
+    public static final String LAB_NAME = "name";
+    public static final String LAB_AREA = "area";
+    public static final String LAB_FLOOR = "floor";
+    public static final String LAB_NOTE = "note";
+
+
     public static final String CREATE_TBL_LAB = String.format("" +
             "create table if not exists %s (" +
-            "%s integer primary key autoincrement," +
-            "%s text)", TBL_LAB, LAB_ID, LAB_NAME);
+            " %s integer primary key autoincrement," +
+            " %s text," +
+            " %s text," +
+            " %s text," +
+            " %s text)", TBL_LAB, LAB_ID, LAB_NAME, LAB_AREA, LAB_FLOOR, LAB_NOTE);
 
     //tbl_Device
     public static final String TBL_DEVICE = "device";
@@ -227,7 +235,11 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         if(cursor!= null && cursor.moveToFirst()){
             do{
-                list.add(new Lab(cursor.getInt(0), cursor.getString(1)));
+                list.add(new Lab(cursor.getInt(0),
+                                 cursor.getString(1),
+                                 cursor.getString(2),
+                                 cursor.getString(3),
+                                 cursor.getString(4)));
             }while (cursor.moveToNext());
         }
         db.close();
@@ -238,6 +250,10 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(LAB_NAME, lab.getLab_Name());
+        contentValues.put(LAB_AREA, (lab.getKhuNha()!=null?lab.getKhuNha():""));
+        contentValues.put(LAB_FLOOR, (lab.getTang()!=null?lab.getTang():""));
+        contentValues.put(LAB_NOTE, (lab.getGhiChu()!= null?lab.getGhiChu():""));
+
         long rowID = db.insert(TBL_LAB, null, contentValues);
         db.close();
         return rowID;
