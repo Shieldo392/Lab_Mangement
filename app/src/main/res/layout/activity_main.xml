@@ -448,6 +448,7 @@
             <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
 
                 <LinearLayout
+                    android:id="@+id/ln_manage_registerlab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"

@@ -1,5 +1,6 @@
 package com.example.lab_management.login;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btn_login,btn_signup;
     EditText edt_username,edt_password;
     SharedPreferences sharedPreferences = null;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +71,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void fakeData() {
         FakeData.InsertUser(LoginActivity.this);
         FakeData.InsertLab(LoginActivity.this);
+        FakeData.Insert_Subject_Term(LoginActivity.this);
+        FakeData.Insert_RegisterLab(LoginActivity.this);
     }
 
     public String checkUser(String user_check, String pass_check) {

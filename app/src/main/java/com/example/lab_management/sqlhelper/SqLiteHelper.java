@@ -9,54 +9,97 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.example.lab_management.manage_registerlab.RegisterLabActivity;
 import com.example.lab_management.objects.Device;
 import com.example.lab_management.objects.Lab;
+import com.example.lab_management.objects.RegisterLab;
+import com.example.lab_management.objects.Subject;
+import com.example.lab_management.objects.Term;
 import com.example.lab_management.objects.User;
 import com.example.lab_management.objects.VerifyReport;
 import com.example.lab_management.utils.DefineName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 3;
-
-
-
+    public static final int DB_VERSION = 5;
 
     // tbl_VerifyReport
     public static final String TBL_VERIFY = "verify_report";
-    public static final String VERIFY_ID = "id";
+    public static final String VERIFY_ID = "verify_id"; // ghi ro id cai j
     public static final String VERIFY_LAB_ID = "lab_id";
     public static final String VERIFY_USER_ID = "user_id";
-    public static final String VERIFY_SHIFT = "shift";
-    public static final String VERIFY_TIME = "time";
-    public static final String VERIFY_NOTE = "note";
+    public static final String VERIFY_SHIFT = "verify_shift";
+    public static final String VERIFY_TIME = "verify_time";
+    public static final String VERIFY_NOTE = "verify_note";
 
     //tbl_User
     public static final String TBL_USER = "user";
-    public static final String USER_ID = "id";
+    public static final String USER_ID = "user_id";
     public static final String USER_NAME = "user_name";
-    public static final String USER_PASSWORD = "password";
-    public static final String USER_CODE_TEACHER = "code_teacher";
-    public static final String USER_EMAIL = "email";
-    public static final String USER_FULL_NAME = "full_name";
-    public static final String USER_GENDER = "gender";
-    public static final String USER_DATE_OF_BIRTH = "dob";
-    public static final String USER_ADDRESS = "address";
-    public static final String USER_TYPE = "type";
+    public static final String USER_PASSWORD = "user_password";
+    public static final String USER_CODE_TEACHER = "user_code_teacher";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_FULL_NAME = "user_full_name";
+    public static final String USER_GENDER = "user_gender";
+    public static final String USER_DATE_OF_BIRTH = "user_dob";
+    public static final String USER_ADDRESS = "user_address";
+    public static final String USER_TYPE = "user_type";
 
     //tbl_Lab
     public static final String TBL_LAB = "lab";
-    public static final String LAB_ID= "id";
-    public static final String LAB_NAME = "name";
-    public static final String LAB_AREA = "area";
-    public static final String LAB_FLOOR = "floor";
-    public static final String LAB_NOTE = "note";
+    public static final String LAB_ID= "lab_id";
+    public static final String LAB_NAME = "lab_name";
+    public static final String LAB_AREA = "lab_area";
+    public static final String LAB_FLOOR = "lab_floor";
+    public static final String LAB_NOTE = "lab_note";
 
+    // tbl RegisterLab
+    public static final String TBL_REGISTERLAB = "registerlab";
+    public static final String REGISTERLAB_ID = "registerlab_id";
+    //public static final String USER_ID = "user_id";
+    public static final String REGISTERLAB_SESSION = "registerlab_session";
+    public static final String REGISTERLAB_TIME = "registerlab_time";
+    //public static final String TERM_ID = "term_id";
+    public static final String REGISTERLAB_REPLACED = "registerlab_replaced";
+
+    // tbl_subject
+    public static final String TBL_SUBJECT = "subject";
+    public static final String SUBJECT_ID = "subject_id";
+    public static final String SUBJECT_NAME = "subject_name";
+
+    // tbl_term
+    public static final String TBL_TERM = "term";
+    public static final String TERM_ID = "term_id";
+    public static final String TERM_NAME = "term_name";
+
+    public static final String CREATE_TBL_SUBJECT =
+            "CREATE TABLE IF NOT EXISTS " + TBL_SUBJECT + "(" +
+                    SUBJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    SUBJECT_NAME + " TEXT)";
+
+    public static final String CREATE_TBL_TERM =
+            "CREATE TABLE IF NOT EXISTS " + TBL_TERM + "(" +
+                    TERM_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    TERM_NAME + " TEXT," +
+                    SUBJECT_ID + " INTEGER)";
+
+    public static final String CREATE_TBL_REGISTERLAB =
+            "CREATE TABLE IF NOT EXISTS " + TBL_REGISTERLAB + "(" +
+                    REGISTERLAB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    LAB_ID + " INTEGER," +
+                    USER_ID + " INTEGER, " +
+                    REGISTERLAB_SESSION + " TEXT," +
+                    REGISTERLAB_TIME + " DATE," +
+                    TERM_ID + " INTEGER," +
+                    REGISTERLAB_REPLACED + " DATE)";
 
     public static final String CREATE_TBL_LAB = String.format("" +
             "create table if not exists %s (" +
@@ -132,6 +175,9 @@ public class SqLiteHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_TBL_USER);
             db.execSQL(CREATE_TBL_VERIFY);
 
+            db.execSQL(CREATE_TBL_SUBJECT);
+            db.execSQL(CREATE_TBL_TERM);
+            db.execSQL(CREATE_TBL_REGISTERLAB);
         }catch (Exception ex){
             ex.printStackTrace();
         }
@@ -146,6 +192,9 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TBL_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TBL_VERIFY);
 
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_SUBJECT);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_TERM);
+        db.execSQL("DROP TABLE IF EXISTS " + TBL_REGISTERLAB);
         onCreate(db);
     }
     //tbl device
@@ -406,4 +455,175 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
+    // table ResgisterLab
+    public int GetTableCount(String tableName){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + tableName;
+        Cursor cursor = db.rawQuery(sql, null);
+        Log.d(TAG, "GetTableCount: " + tableName + " " + cursor.getCount());
+        int count = cursor.getCount();
+        return count;
+    }
+
+    public long Insert_Subject(Subject subject) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(SUBJECT_ID, subject.getSubjectID());
+        contentValues.put(SUBJECT_NAME, subject.getSubjectName());
+
+        long rowID = db.insert(TBL_SUBJECT, null, contentValues);
+        db.close();
+        return rowID;
+    }
+
+    public long Insert_Term(Term term) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(TERM_ID, term.getTermID());
+        contentValues.put(TERM_NAME, term.getTermName());
+        contentValues.put(SUBJECT_ID, term.getSubjectID());
+
+        long rowID = db.insert(TBL_TERM, null, contentValues);
+        db.close();
+        return rowID;
+    }
+
+    public boolean Insert_RegisterLab(RegisterLab registerLab){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(REGISTERLAB_ID, registerLab.getRegisterID());
+        contentValues.put(LAB_ID, registerLab.getLabID());
+        contentValues.put(USER_ID, registerLab.getUserID());
+        contentValues.put(REGISTERLAB_SESSION, registerLab.getSession());
+        try {
+            contentValues.put(REGISTERLAB_TIME, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getTime()+"")+"");
+        } catch (ParseException e) {
+            contentValues.put(REGISTERLAB_TIME, "");
+            e.printStackTrace();
+        }
+
+        contentValues.put(TERM_ID, registerLab.getTermID());
+
+        if (registerLab.getReplaced() == null){
+            contentValues.put(REGISTERLAB_REPLACED, "");
+        }
+        else {
+            try {
+                contentValues.put(REGISTERLAB_REPLACED, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getReplaced()+"")+"");
+            } catch (ParseException e) {
+                contentValues.put(REGISTERLAB_REPLACED, "");
+                e.printStackTrace();
+            }
+        }
+
+        long rowID = db.insert(TBL_REGISTERLAB, null, contentValues);
+        db.close();
+        return rowID >= 0;
+    }
+
+    public boolean Update_RegisterLab(RegisterLab registerLab){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(REGISTERLAB_ID, registerLab.getRegisterID());
+        contentValues.put(LAB_ID, registerLab.getLabID());
+        contentValues.put(USER_ID, registerLab.getUserID());
+        contentValues.put(REGISTERLAB_SESSION, registerLab.getSession());
+        try {
+            contentValues.put(REGISTERLAB_TIME, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getTime()+"")+"");
+        } catch (ParseException e) {
+            contentValues.put(REGISTERLAB_TIME, "");
+            e.printStackTrace();
+        }
+
+        contentValues.put(TERM_ID, registerLab.getTermID());
+
+        if (registerLab.getReplaced() == null){
+            contentValues.put(REGISTERLAB_REPLACED, "");
+        }
+        else {
+            try {
+                contentValues.put(REGISTERLAB_REPLACED, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getReplaced()+"")+"");
+            } catch (ParseException e) {
+                contentValues.put(REGISTERLAB_REPLACED, "");
+                e.printStackTrace();
+            }
+        }
+
+        int rowEffect = db.update(TBL_REGISTERLAB, contentValues, REGISTERLAB_ID + " = ?",
+                new String[]{String.valueOf(registerLab.getRegisterID())});
+        db.close();
+        return rowEffect != -1;
+    }
+
+    public boolean Delete_RegisterLab(RegisterLab registerLab) {
+        SQLiteDatabase db = getReadableDatabase();
+        int rowEffect = db.delete(TBL_REGISTERLAB, REGISTERLAB_ID + " = ?",
+                new String[]{String.valueOf(registerLab.getRegisterID())});
+        db.close();
+        return (rowEffect != -1);
+    }
+
+    public List<RegisterLab> GetAllRegisterLab() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<RegisterLab> registerLabsList = new ArrayList<RegisterLab>();
+        String sql = "SELECT * FROM " + TBL_REGISTERLAB;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                try {
+                    registerLabsList.add(new RegisterLab(cursor.getInt(cursor.getColumnIndex(REGISTERLAB_ID)),
+                            cursor.getInt(cursor.getColumnIndex(LAB_ID)),
+                            cursor.getInt(cursor.getColumnIndex(USER_ID)),
+                            cursor.getString(cursor.getColumnIndex(REGISTERLAB_SESSION)),
+                            new SimpleDateFormat("yyyy/MM/dd").parse(cursor.getString(cursor.getColumnIndex(REGISTERLAB_TIME))),
+                            cursor.getInt(cursor.getColumnIndex(TERM_ID)),
+                            new SimpleDateFormat("yyyy/MM/dd").parse(cursor.getString(cursor.getColumnIndex(REGISTERLAB_REPLACED)))));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return registerLabsList;
+    }
+
+    public List<Lab> GetAllLab(){
+        SQLiteDatabase db = getReadableDatabase();
+        List<Lab> labsList = new ArrayList<Lab>();
+        String sql = "SELECT * FROM " + TBL_LAB;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                // LAB_ID, LAB_NAME, LAB_AREA, LAB_FLOOR, LAB_NOTE
+                labsList.add(new Lab(cursor.getInt(cursor.getColumnIndex(LAB_ID)),
+                cursor.getString(cursor.getColumnIndex(LAB_NAME)),
+                cursor.getString(cursor.getColumnIndex(LAB_AREA)),
+                cursor.getString(cursor.getColumnIndex(LAB_FLOOR)),
+                cursor.getString(cursor.getColumnIndex(LAB_NOTE))));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return labsList;
+    }
+
+    public List<Term> GetAllTerm() {
+        SQLiteDatabase db = getReadableDatabase();
+        List<Term> labsList = new ArrayList<>();
+        String sql = "SELECT * FROM " + TBL_TERM;
+        Cursor cursor = db.rawQuery(sql, null);
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                labsList.add(new Term(cursor.getInt(cursor.getColumnIndex(TERM_ID)),
+                        cursor.getString(cursor.getColumnIndex(TERM_NAME)),
+                        cursor.getInt(cursor.getColumnIndex(SUBJECT_ID))));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+        return labsList;
+    }
 }

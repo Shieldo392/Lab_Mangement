@@ -9,7 +9,8 @@
         android:roundIcon="@drawable/logo_haui"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".manage_registerlab.RegisterLabActivity"></activity>
+        <activity android:name=".login.SignUp" />
         <activity android:name=".manage_verify.ListVerify" />
         <activity android:name=".manage_verify.EditVerify" />
         <activity android:name=".manage_verify.AddNewVerify" />
