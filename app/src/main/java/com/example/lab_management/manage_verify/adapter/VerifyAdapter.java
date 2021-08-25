@@ -92,7 +92,7 @@ public class VerifyAdapter extends BaseAdapter {
         } else tvGV.setText(report.getMaPhong()+" - " +report.getName());
 
 
-        String strHeader = report.getId() +"";
+        String strHeader = "Mã phiếu: MP"+ report.getId() +"";
         tv_header.setText(strHeader);
 
         String strShiftTime = report.getTime() + " - ";
@@ -101,7 +101,7 @@ public class VerifyAdapter extends BaseAdapter {
         else strShiftTime+= " ca chiều";
         tv_shift_time.setText(strShiftTime);
 
-        tv_note.setText("Trạng thái: " + report.getNote());
+        tv_note.setText("Ghi chú: " + report.getNote());
 
         return convertView;
     }

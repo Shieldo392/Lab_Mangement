@@ -1,46 +1,52 @@
 package com.example.lab_management.objects;
 
-public class RegisterLab {
-    private String registerID;
-    private Lab lab;
-    private User user;
-    private String session; // ca thực hành
-    private String time; // thứ mấy trong tuần
-    private int count; // số buổi thực hành
-    private Term term;
+import java.util.Date;
 
-    public RegisterLab(String registerID, Lab lab, User user, String session, String time, int count, Term term) {
+public class RegisterLab {
+    private int registerID;
+    private int labID;
+    private int userID;
+    private String session; // ca thực hành
+    private Date time; // thứ mấy trong tuần
+    //private int count; // số buổi thực hành // we dont need it anymore
+    private int termID;
+    private Date replaced; // thay the ly thuyet
+
+    public RegisterLab(int registerID, int labID, int userID, String session, Date time, int termID, Date replaced) {
         this.registerID = registerID;
-        this.lab = lab;
-        this.user = user;
+        this.labID = labID;
+        this.userID = userID;
         this.session = session;
         this.time = time;
-        this.count = count;
-        this.term = term;
+        this.termID = termID;
+        this.replaced = replaced;
     }
 
-    public String getRegisterID() {
+    public RegisterLab() {
+    }
+
+    public int getRegisterID() {
         return registerID;
     }
 
-    public void setRegisterID(String registerID) {
+    public void setRegisterID(int registerID) {
         this.registerID = registerID;
     }
 
-    public Lab getLab() {
-        return lab;
+    public int getLabID() {
+        return labID;
     }
 
-    public void setLab(Lab lab) {
-        this.lab = lab;
+    public void setLabID(int labID) {
+        this.labID = labID;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getSession() {
@@ -51,27 +57,41 @@ public class RegisterLab {
         this.session = session;
     }
 
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 
-    public int getCount() {
-        return count;
+    public int getTermID() {
+        return termID;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setTermID(int termID) {
+        this.termID = termID;
     }
 
-    public Term getTerm() {
-        return term;
+    public Date getReplaced() {
+        return replaced;
     }
 
-    public void setTerm(Term term) {
-        this.term = term;
+    public void setReplaced(Date replaced) {
+        this.replaced = replaced;
+    }
+
+    // TODO
+    @Override
+    public String toString() {
+        return "RegisterLab{" +
+                "registerID=" + registerID +
+                ", labID=" + labID +
+                ", userID=" + userID +
+                ", session='" + session + '\'' +
+                ", time=" + time +
+                ", termID=" + termID +
+                ", replaced=" + replaced +
+                '}';
     }
 }

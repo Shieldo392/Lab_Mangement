@@ -8,13 +8,16 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,6 +57,8 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
     EditText edt_note;
     SqLiteHelper sqliteHelper = null;
     VerifyReport report;
+    ImageButton imv_option_menu;
+    PopupMenu popupMenu = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +116,70 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
                 DatePickerDialog dialog = new DatePickerDialog(EditVerify.this, callback, 2021, date.getMonth(), date.getDate());
                 dialog.setTitle("Chọn thời gian bắt đầu");
                 dialog.show();
+            }
+        });
+
+        sp_lab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                deviceList = labs.get(position).getDeviceList();
+                deviceApdater.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        popupMenu = new PopupMenu(this, imv_option_menu);
+        popupMenu.inflate(R.menu.menu_edit );
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.mn_edit:
+                        AlertDialog.Builder al = new AlertDialog.Builder(EditVerify.this)
+                                .setTitle("Xác nhận")
+                                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        return;
+                                    }
+                                })
+                                .setPositiveButton("Sửa", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        processEdit();
+                                    }
+                                })
+                                .setMessage("Bạn có muốn sửa không?");
+                        al.show();
+                        break;
+                    case R.id.mn_cancel:
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(EditVerify.this)
+                                .setTitle("Message")
+                                .setMessage("Bạn có thực sự muốn hủy?")
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                .setNegativeButton(android.R.string.no, null);
+                        alertDialog.show();
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        imv_option_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
             }
         });
 
@@ -182,6 +251,7 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
 
         lv_devicie = findViewById(R.id.lv_device);
         edt_note = findViewById(R.id.edt_note);
+        imv_option_menu = findViewById(R.id.option_menu);
     }
 
     @Override

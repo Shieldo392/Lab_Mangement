@@ -1,17 +1,31 @@
 package com.example.lab_management.utils;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Build;
+import android.text.format.DateUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 
+import androidx.annotation.RequiresApi;
+
 import com.example.lab_management.objects.Device;
 import com.example.lab_management.objects.Lab;
+import com.example.lab_management.objects.RegisterLab;
+import com.example.lab_management.objects.Subject;
+import com.example.lab_management.objects.Term;
 import com.example.lab_management.objects.User;
 import com.example.lab_management.objects.VerifyReport;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FakeData {
     public static void InsertLab(Context context) {
@@ -44,13 +58,13 @@ public class FakeData {
         list.add(new User(1, "abcd", "12345", "12316233",
                 "habas@gmail.com", "Nguyễn Văn A", "nam", "10/03/1998",
                 "Hà Nội", 0));
-        list.add(new User(1, "duongvu", "12345", "12316233",
+        list.add(new User(2, "duongvu", "12345", "12316233",
                 "habas@gmail.com", "Vũ Thị Dương", "nữ", "10/03/1998",
                 "Hà Nội", 0));
-        list.add(new User(1, "damamnh", "12345", "12316233",
+        list.add(new User(3, "damamnh", "12345", "12316233",
                 "habas@gmail.com", "hà Mạnh Đào", "nam", "10/03/1998",
                 "Hà Nội", 0));
-        list.add(new User(1, "abcd", "12345", "12316233",
+        list.add(new User(4, "abcd", "12345", "12316233",
                 "habas@gmail.com", "Nguyễn Thùy Linh", "nữ", "10/03/1998",
                 "Hà Nội", 0));
 
@@ -87,5 +101,56 @@ public class FakeData {
         }
     }
 
+    public static void Insert_Subject_Term(Context context){
+        SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
+        List<Subject> list1 = new ArrayList<>();
+        list1.add(new Subject(1, 1, "Lập trình ăn roi"));
+        list1.add(new Subject(1, 2, "lập trình pờ hắt pừ"));
 
+        if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_SUBJECT) <= 0){
+            for (Subject subject : list1) {
+                long result = sqliteHelper.Insert_Subject(subject);
+                if (result == -1) {
+                    Toast.makeText(context, "Them khong thanh cong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+
+        List<Term> list2 = new ArrayList<>();
+        list2.add(new Term(1, "Lớp j đó 1", list1.get(0).getSubjectID()));
+        list2.add(new Term(2, "Lớp j đó 2", list1.get(0).getSubjectID()));
+        list2.add(new Term(3, "Lớp j đó 3", list1.get(1).getSubjectID()));
+        list2.add(new Term(4, "Lớp j đó 4", list1.get(1).getSubjectID()));
+
+
+        if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_TERM) <= 0){
+            for (Term term : list2) {
+                Log.e("AAAAAAA", "Insert_Subject_Term: " + term.getTermID());
+                long result = sqliteHelper.Insert_Term(term);
+                if (result == -1) {
+                    Toast.makeText(context, "Them khong thanh cong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void Insert_RegisterLab(Context context) {
+        // nhieu qua
+        SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
+        List<RegisterLab> list = new ArrayList<>();
+        // int registerID, int labID, int userID, String session, Date time, int termID, Date replaced
+        list.add(new RegisterLab(1, 1, 1, "1, 2, 3", DateUtility.Date(2020, 3, 4), 1, DateUtility.Date(2021, 5, 3)));
+        list.add(new RegisterLab(2, 1, 1, "4, 5, 6", DateUtility.Date(2020, 3, 4), 2, DateUtility.Date(2021, 5, 3)));
+        list.add(new RegisterLab(2, 2, 2, "1, 2, 3", DateUtility.Date(2020, 3, 4), 3, DateUtility.Date(2021, 5, 3)));
+
+        if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_REGISTERLAB) <= 0){
+            for (RegisterLab registerLab : list) {
+                boolean result = sqliteHelper.Insert_RegisterLab(registerLab);
+                if (result) {
+                    Toast.makeText(context, "Them khong thanh cong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.lab_management.login;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -7,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +27,13 @@ import java.util.List;
 public class LoginActivity extends AppCompatActivity {
     Button btn_login,btn_signup;
     EditText edt_username,edt_password;
+    SharedPreferences sharedPreferences = null;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
         getWidget();
         fakeData();
         btn_login.setOnClickListener(new View.OnClickListener() {
@@ -66,9 +71,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void fakeData() {
         FakeData.InsertUser(LoginActivity.this);
         FakeData.InsertLab(LoginActivity.this);
+        FakeData.Insert_Subject_Term(LoginActivity.this);
+        FakeData.Insert_RegisterLab(LoginActivity.this);
     }
 
     public String checkUser(String user_check, String pass_check) {
@@ -78,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
         {
+            sharedPreferences.edit().putInt("user_id", user.getId_user()).apply();
             return user_check;
         }
 
