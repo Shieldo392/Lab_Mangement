@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.lab_management.manage_device.ListDevice;
 import com.example.lab_management.manage_registerlab.RegisterLabActivity;
 import com.example.lab_management.manage_verify.ListVerify;
 
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout ln_manage_verify_report;
     LinearLayout ln_manage_registerlab;
+    LinearLayout ln_manage_device;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,19 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        ln_manage_device.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ListDevice.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     private void getWidgets() {
         ln_manage_verify_report = findViewById(R.id.ln_manage_verify_report);
         ln_manage_registerlab = findViewById(R.id.ln_manage_registerlab);
+        ln_manage_device = findViewById(R.id.ln_manage_device);
     }
 }

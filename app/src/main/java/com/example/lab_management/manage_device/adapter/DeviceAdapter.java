@@ -25,7 +25,7 @@ public class DeviceAdapter extends BaseAdapter {
     public DeviceAdapter(Activity context1, int layoutId, List<Device> list) {
         this.context = context1;
         this.layoutId = layoutId;
-        this.listDevice = listDevice;
+        this.listDevice = list;
     }
 
     public List<Device> getList() {
@@ -38,7 +38,7 @@ public class DeviceAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
-        return listDevice.size();
+        return listDevice!=null? listDevice.size() : 0;
     }
 
     @Override

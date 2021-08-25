@@ -77,11 +77,19 @@ public class ListDevice extends AppCompatActivity {
         lv_device.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ListDevice.this, AddDeviceActivity.class);
+                Intent intent = new Intent(ListDevice.this, EditDevice.class);
                 Bundle bundle = new Bundle();
                 Device device = list.get(position);
-                bundle.putParcelable("report", device);
+                bundle.putParcelable("device", device);
                 intent.putExtra("bundle", bundle);
+                startActivity(intent);
+            }
+        });
+
+        btn_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListDevice.this, AddDeviceActivity.class);
                 startActivity(intent);
             }
         });
