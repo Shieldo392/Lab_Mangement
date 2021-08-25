@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ListVerify.class);
-                startActivity(intent);
+                startActivity(intent);//cho dat:
             }
         });
         ln_manage_registerlab.setOnClickListener(v -> {

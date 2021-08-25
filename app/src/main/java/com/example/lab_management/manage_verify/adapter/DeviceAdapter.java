@@ -45,7 +45,7 @@ public class DeviceAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         Device device = deviceList.get(position);
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        convertView = inflater.inflate(R.layout.item_device, parent, false);
+        convertView = inflater.inflate(R.layout.item_dv, parent, false);
 
         TextView tvDeviceName;
         CheckBox checkBox;
