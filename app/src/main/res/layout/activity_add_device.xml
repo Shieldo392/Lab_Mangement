@@ -6,17 +6,37 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".manage_device.AddDeviceActivity">
-
-    <TextView
-        android:id="@+id/textView"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/teal_700"
-        android:gravity="center"
-        android:text="Quản lý thiết bị trong phòng"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/teal_700"
+            android:textColor="@color/white"
+            android:text="Quản lý thiết bị trong phòng"
+             />
+        <ImageButton
+            android:id="@+id/option_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@color/teal_700"
+            android:src="@drawable/ic_menu"
+            android:tint="@color/white" />
+
+    </RelativeLayout>
+
 
     <TableLayout
         android:layout_width="match_parent"

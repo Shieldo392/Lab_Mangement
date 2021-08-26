@@ -79,17 +79,17 @@ public class DeviceAdapter extends BaseAdapter {
             }
         }
         if(pth!= null){
-            tv_tenPhong.setText(pth.getLab_Name());
+            tv_tenPhong.setText("Tên phòng: "+pth.getLab_Name());
 
-        } else tv_tenPhong.setText(dv.getMaPhong());
-        String strHeader = dv.getMaTb() +"";
+        } else tv_tenPhong.setText("Tên phòng: "+dv.getMaPhong());
+        String strHeader = "Mã thiết bị: "+dv.getMaTb() +"";
         tv_header.setText(strHeader);
 
-        tv_tentb.setText(dv.getTenTb());
-        tv_loaitb.setText(dv.getLoaitb());
-        tv_tinhtrang.setText(dv.getTinhtrang());
-        tv_ngaylap.setText(dv.getNgaynhap());
-        tv_ghichu.setText(dv.getGhichu());
+        tv_tentb.setText("Tên thiết bị: "+dv.getTenTb());
+        tv_loaitb.setText("Loại thiết bị: "+dv.getLoaitb());
+        tv_tinhtrang.setText("Tình trạng: "+dv.getTinhtrang());
+        tv_ngaylap.setText("Ngày lắp: "+dv.getNgaynhap());
+        tv_ghichu.setText("Ghi chú: "+dv.getGhichu());
         return convertView;
     }
 }
