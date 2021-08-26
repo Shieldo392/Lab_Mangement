@@ -81,7 +81,7 @@ public class ListDevice extends AppCompatActivity {
                 Bundle bundle = new Bundle();
                 Device device = list.get(position);
                 bundle.putParcelable("device", device);
-                intent.putExtra("bundle", bundle);
+                intent.putExtra("bundle_device", bundle);
                 startActivity(intent);
             }
         });
@@ -106,6 +106,8 @@ public class ListDevice extends AppCompatActivity {
             list = sqliteHelper.Get_Device();
             deviceAdapter.setList(list);
             deviceAdapter.notifyDataSetChanged();
+            if(list.size()>0)
+                imv_nodata.setVisibility(View.GONE);
         }
     }
 }
