@@ -225,16 +225,22 @@ public class EditDevice extends AppCompatActivity {
                 tinhTrang = "Hỏng";
             }
             int maTB = device.getMaTb();
-            dv = new Device(maTB, autoTenTb.getText().toString(),
-                    spnLoaiTb.getSelectedItem().toString(), lab.getLab_ID(), tinhTrang, editNgayNhap.getText().toString(), editGhiChu.getText().toString());
-            long result = sqliteHelper.Update_Device_By_ID(dv);
-            if (result <= 0) {
-                Toast.makeText(EditDevice.this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
-                return;
+            if(autoTenTb.getText().toString().isEmpty()){
+                Toast.makeText(getBaseContext(), "Vui lòng nhập tên thiết bị thông tin", Toast.LENGTH_SHORT).show();
             }
-            Toast.makeText(EditDevice.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-            finish();
-            processAutoTenTb(autoTenTb.getText().toString());
+            else{
+                dv = new Device(maTB, autoTenTb.getText().toString(),
+                        spnLoaiTb.getSelectedItem().toString(), lab.getLab_ID(), tinhTrang, editNgayNhap.getText().toString(), editGhiChu.getText().toString());
+                long result = sqliteHelper.Update_Device_By_ID(dv);
+                if (result <= 0) {
+                    Toast.makeText(EditDevice.this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Toast.makeText(EditDevice.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                finish();
+                processAutoTenTb(autoTenTb.getText().toString());
+            }
+
 
     }
 

@@ -49,12 +49,10 @@ public class AddDeviceActivity extends AppCompatActivity {
     ImageButton imv_optionmenu;
 
     List<Lab> labs = new ArrayList<>();
-    ListView lv_device;
     LabArrayAdapter adapter_lab;
-    Device device;
+
     DeviceAdapter deviceAdapter = null;
 
-    int curIndexSelected = -1;
 
     List<String> loaitb;
 
@@ -178,9 +176,9 @@ public class AddDeviceActivity extends AppCompatActivity {
         });
     }
     private void processAdd(){
-        //Lab lab = (Lab) sp_lab.getSelectedItem();
+
         Lab lab = (Lab) spnTenphong.getSelectedItem();
-        String tenTb = autoTenTb.getText().toString().trim();
+        String tenTb = autoTenTb.getText()+"";
         String loaitb = spnLoaiTb.getSelectedItem().toString();
         String tinhTrang = "";
         if(radTot.isChecked()){
@@ -191,22 +189,29 @@ public class AddDeviceActivity extends AppCompatActivity {
         }
         String ngaylap = editNgayNhap.getText().toString().trim();
         String ghiChu = editGhiChu.getText().toString().trim();
-        Device dv = new Device(0,tenTb,loaitb,lab.getLab_ID(),tinhTrang,ngaylap,ghiChu);
-        long result = sqliteHelper.Insert_Device(dv);
-        if(result==-1)
-        {
-            Toast.makeText(AddDeviceActivity.this, "Thêm thất bại!", Toast.LENGTH_SHORT).show();
-            return;
+        if(tenTb.isEmpty()){
+            Toast.makeText(getBaseContext(), "Vui lòng nhập tên thiết bị thông tin", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(AddDeviceActivity.this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
+        else{
+            Device dv = new Device(0,tenTb,loaitb,lab.getLab_ID(),tinhTrang,ngaylap,ghiChu);
+            processAutoTenTb(tenTb);
+            long result = sqliteHelper.Insert_Device(dv);
+            if(result==-1)
+            {
+                Toast.makeText(AddDeviceActivity.this, "Thêm thất bại!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            else Toast.makeText(AddDeviceActivity.this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
+            clearText();
+        }
 
-        clearText();
-        processAutoTenTb(tenTb);
     }
 
     private void clearText(){
         radTot.setChecked(true);
-        radHong.setChecked(true);
+        radHong.setChecked(false);
+        autoTenTb.requestFocus();
+        autoTenTb.setText("");
         editGhiChu.setText("");
     }
 
