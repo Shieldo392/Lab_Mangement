@@ -4,15 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -41,13 +46,14 @@ public class AddDeviceActivity extends AppCompatActivity {
     RadioGroup rad;
     RadioButton radTot, radHong;
     Spinner spnTenphong, spnLoaiTb;
+    ImageButton imv_optionmenu;
 
     List<Lab> labs = new ArrayList<>();
     ListView lv_device;
     LabArrayAdapter adapter_lab;
     Device device;
     DeviceAdapter deviceAdapter = null;
-    List<Device> listDevice = new ArrayList<>();
+
     int curIndexSelected = -1;
 
     List<String> loaitb;
@@ -57,16 +63,15 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     ArrayAdapter<String> adapterLoaitb;
     SqLiteHelper sqliteHelper = null;
-
+    PopupMenu popupMenu = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_device);
         sqliteHelper = SqLiteHelper.getInstance(this);
-        deviceAdapter = new DeviceAdapter(this, R.layout.item_device, listDevice);
-        lv_device.setAdapter(deviceAdapter);
         getwidgets();
         getSpinnerDat();
+        setOnClick();
     }
     void getSpinnerDat(){
         labs = sqliteHelper.Get_Lab();
@@ -102,32 +107,75 @@ public class AddDeviceActivity extends AppCompatActivity {
         rad = findViewById(R.id.radgroup);
         radTot = findViewById(R.id.radtot);
         radHong = findViewById(R.id.radhong);
+        imv_optionmenu = findViewById(R.id.option_menu);
     }
-    void processEdit(){
-        if(curIndexSelected  >= 0){
-            if(curIndexSelected  >= 0){
-                Lab lab = (Lab) spnTenphong.getSelectedItem();
-                Device dv = new Device();
-                String tinhTrang = "";
-                if(radTot.isChecked()){
-                    tinhTrang="Tốt";
-                }
-                else if(radHong.isChecked()){
-                    tinhTrang = "Hỏng";
-                }
-                dv = new Device(listDevice.get(curIndexSelected).getMaTb(),autoTenTb.getText().toString(),
-                        spnLoaiTb.getSelectedItem().toString(),lab.getLab_ID(),tinhTrang,editNgayNhap.getText().toString(),editGhiChu.getText().toString());
-                long result = sqliteHelper.Update_Device_By_ID(dv);
-                if(result<=0)
-                {
-                    Toast.makeText(AddDeviceActivity.this, "Cập nhật thất bại!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Toast.makeText(AddDeviceActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
-                finish();
-                processAutoTenTb(autoTenTb.getText().toString());
+    public void setOnClick(){
+        btnPickTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final DatePickerDialog.OnDateSetListener listener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        String dayOfMonthString = String.format("%02d",dayOfMonth);
+                        String monthString = String.format("%02d",month+1);
+                        String yearString = String.format("%04d",year);
+                        editNgayNhap.setText(dayOfMonthString+"/"+monthString+"/"+yearString);
+                    }
+                };
+                DatePickerDialog dialog = new DatePickerDialog(AddDeviceActivity.this,listener,2021,7,1);
+                dialog.setTitle("Ngày nhập thiết bị");
+                dialog.show();
             }
-        }
+        });
+        popupMenu = new PopupMenu(this, imv_optionmenu);
+        popupMenu.inflate(R.menu.menu_option_device);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.mn_add_device:
+                        AlertDialog.Builder al = new AlertDialog.Builder(AddDeviceActivity.this)
+                                .setTitle("Xác nhận")
+                                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        return;
+                                    }
+                                })
+                                .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        processAdd();
+                                    }
+                                })
+                                .setMessage("Bạn có muốn thêm không?");
+                        al.show();
+                        break;
+                    case R.id.mn_cancel:
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddDeviceActivity.this)
+                                .setTitle("Message")
+                                .setMessage("Bạn có thực sự muốn hủy?")
+                                .setPositiveButton(android.R.string.yes,
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                finish();
+                                            }
+                                        })
+                                .setNegativeButton(android.R.string.no, null);
+                        alertDialog.show();
+                        break;
+                    }
+                return false;
+            }
+
+        });
+        imv_optionmenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupMenu.show();
+            }
+        });
     }
     private void processAdd(){
         //Lab lab = (Lab) sp_lab.getSelectedItem();
@@ -166,64 +214,6 @@ public class AddDeviceActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_option_device, menu);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.mn_add_device:
-                AlertDialog.Builder al = new AlertDialog.Builder(AddDeviceActivity.this)
-                        .setTitle("Xác nhận")
-                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                return;
-                            }
-                        })
-                        .setPositiveButton("Thêm", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                processAdd();
-                            }
-                        })
-                        .setMessage("Bạn có muốn thêm không?");
-                al.show();
-
-                break;
-            case R.id.mn_edit_device:
-                AlertDialog.Builder builder = new AlertDialog.Builder(AddDeviceActivity.this)
-                        .setTitle("Xác nhận")
-                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                return;
-                            }
-                        })
-                        .setPositiveButton("Sửa", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                processEdit();
-                            }
-                        })
-                        .setMessage("Bạn có muốn sửa không?");
-                builder.show();
-                break;
-            case R.id.mn_cancel_add_dv:
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(AddDeviceActivity.this)
-                        .setTitle("Message")
-                        .setMessage("Bạn có thực sự muốn hủy?")
-                        .setPositiveButton(android.R.string.yes,
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                    }
-                                })
-                        .setNegativeButton(android.R.string.no, null);
-                alertDialog.show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void processAutoTenTb(String data){
