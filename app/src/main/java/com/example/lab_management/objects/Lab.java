@@ -1,11 +1,14 @@
 package com.example.lab_management.objects;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Lab {
+public class Lab implements Parcelable {
     private int lab_ID;
     private String lab_Name;
     /*private String lab_Area; //Khu A7 or A1
@@ -33,6 +36,32 @@ public class Lab {
         this.ghiChu = ghiChu;
         this.deviceList = new ArrayList<>();
         this.historyVerify = new ArrayList<>();
+    }
+
+    protected Lab(Parcel in) {
+        lab_ID = in.readInt();
+        lab_Name = in.readString();
+        deviceList = in.createTypedArrayList(Device.CREATOR);
+        historyVerify = in.createTypedArrayList(VerifyReport.CREATOR);
+        khuNha = in.readString();
+        tang = in.readString();
+        ghiChu = in.readString();
+    }
+
+    public static final Creator<Lab> CREATOR = new Creator<Lab>() {
+        @Override
+        public Lab createFromParcel(Parcel in) {
+            return new Lab(in);
+        }
+
+        @Override
+        public Lab[] newArray(int size) {
+            return new Lab[size];
+        }
+    };
+
+    public Lab() {
+
     }
 
     public String getGhiChu() {
@@ -125,5 +154,19 @@ public class Lab {
 
     public void setHistoryVerify(List<VerifyReport> historyVerify) {
         this.historyVerify = historyVerify;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.lab_ID);
+        dest.writeString(this.lab_Name);
+        dest.writeString(this.khuNha);
+        dest.writeString(this.tang);
+        dest.writeString(this.ghiChu);
     }
 }

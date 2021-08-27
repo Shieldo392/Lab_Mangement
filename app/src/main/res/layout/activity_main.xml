@@ -185,6 +185,7 @@
             <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
 
                 <LinearLayout
+                    android:id="@+id/ln_manage_labs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -195,7 +196,7 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
-                        android:src="@drawable/list" />
+                        android:src="@drawable/lab" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -204,7 +205,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Danh sách Phòng máy"
+                        android:text="Quản lý Phòng máy"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 

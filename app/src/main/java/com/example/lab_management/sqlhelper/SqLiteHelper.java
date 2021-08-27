@@ -308,6 +308,12 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
+    public int DeleteLabByID(int lab_id){
+        SQLiteDatabase db = getWritableDatabase();
+        int rowID = db.delete(TBL_LAB, LAB_ID+"=?", new String[]{lab_id+""});
+        return rowID;
+    }
+
     //tbl_USER
 
     public int Get_Count_User(){
