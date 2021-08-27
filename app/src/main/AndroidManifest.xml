@@ -9,7 +9,9 @@
         android:roundIcon="@drawable/logo_haui"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-
+        <activity android:name=".manage_labs.EditLabActivity"></activity>
+        <activity android:name=".manage_labs.AddLabActivity" />
+        <activity android:name=".manage_labs.ManageLabs" />
         <activity android:name=".manage_registerlab.RegisterLabActivity" />
         <activity android:name=".login.SignUp" />
         <activity android:name=".manage_device.EditDevice" />
