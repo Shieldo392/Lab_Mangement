@@ -1,5 +1,6 @@
 package com.example.lab_management.sqlhelper;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,7 +10,6 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-import com.example.lab_management.manage_registerlab.RegisterLabActivity;
 import com.example.lab_management.objects.Device;
 import com.example.lab_management.objects.Lab;
 import com.example.lab_management.objects.RegisterLab;
@@ -17,19 +17,15 @@ import com.example.lab_management.objects.Subject;
 import com.example.lab_management.objects.Term;
 import com.example.lab_management.objects.User;
 import com.example.lab_management.objects.VerifyReport;
-import com.example.lab_management.utils.DefineName;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 5;
+    public static final int DB_VERSION = 9;
 
     // tbl_VerifyReport
     public static final String TBL_VERIFY = "verify_report";
@@ -97,9 +93,9 @@ public class SqLiteHelper extends SQLiteOpenHelper {
                     LAB_ID + " INTEGER," +
                     USER_ID + " INTEGER, " +
                     REGISTERLAB_SESSION + " TEXT," +
-                    REGISTERLAB_TIME + " DATE," +
+                    REGISTERLAB_TIME + " TEXT," +
                     TERM_ID + " INTEGER," +
-                    REGISTERLAB_REPLACED + " DATE)";
+                    REGISTERLAB_REPLACED + " TEXT)";
 
     public static final String CREATE_TBL_LAB = String.format("" +
             "create table if not exists %s (" +
@@ -465,10 +461,9 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     public int GetTableCount(String tableName){
         SQLiteDatabase db = getReadableDatabase();
         String sql = "SELECT * FROM " + tableName;
-        Cursor cursor = db.rawQuery(sql, null);
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, null);
         Log.d(TAG, "GetTableCount: " + tableName + " " + cursor.getCount());
-        int count = cursor.getCount();
-        return count;
+        return cursor.getCount();
     }
 
     public long Insert_Subject(Subject subject) {
@@ -496,32 +491,25 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
+    @SuppressLint("SimpleDateFormat")
     public boolean Insert_RegisterLab(RegisterLab registerLab){
+        System.err.println(registerLab.getRegisterID() + "+" + registerLab.getLabID() + "+" + registerLab.getTermID() + "+" + registerLab.getTime());
+        System.err.println("AAA: " + registerLab.getTime()+"");
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(REGISTERLAB_ID, registerLab.getRegisterID());
+        //contentValues.put(REGISTERLAB_ID, registerLab.getRegisterID());
         contentValues.put(LAB_ID, registerLab.getLabID());
         contentValues.put(USER_ID, registerLab.getUserID());
         contentValues.put(REGISTERLAB_SESSION, registerLab.getSession());
-        try {
-            contentValues.put(REGISTERLAB_TIME, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getTime()+"")+"");
-        } catch (ParseException e) {
-            contentValues.put(REGISTERLAB_TIME, "");
-            e.printStackTrace();
-        }
+        contentValues.put(REGISTERLAB_TIME, registerLab.getTime());
 
         contentValues.put(TERM_ID, registerLab.getTermID());
 
-        if (registerLab.getReplaced() == null){
+        if (registerLab.getReplaced() == null || registerLab.getReplaced().equals("")){
             contentValues.put(REGISTERLAB_REPLACED, "");
         }
         else {
-            try {
-                contentValues.put(REGISTERLAB_REPLACED, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getReplaced()+"")+"");
-            } catch (ParseException e) {
-                contentValues.put(REGISTERLAB_REPLACED, "");
-                e.printStackTrace();
-            }
+            contentValues.put(REGISTERLAB_REPLACED, registerLab.getReplaced());
         }
 
         long rowID = db.insert(TBL_REGISTERLAB, null, contentValues);
@@ -529,6 +517,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return rowID >= 0;
     }
 
+    @SuppressLint("SimpleDateFormat")
     public boolean Update_RegisterLab(RegisterLab registerLab){
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -536,12 +525,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         contentValues.put(LAB_ID, registerLab.getLabID());
         contentValues.put(USER_ID, registerLab.getUserID());
         contentValues.put(REGISTERLAB_SESSION, registerLab.getSession());
-        try {
-            contentValues.put(REGISTERLAB_TIME, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getTime()+"")+"");
-        } catch (ParseException e) {
-            contentValues.put(REGISTERLAB_TIME, "");
-            e.printStackTrace();
-        }
+        contentValues.put(REGISTERLAB_TIME, registerLab.getTime());
 
         contentValues.put(TERM_ID, registerLab.getTermID());
 
@@ -549,12 +533,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
             contentValues.put(REGISTERLAB_REPLACED, "");
         }
         else {
-            try {
-                contentValues.put(REGISTERLAB_REPLACED, new SimpleDateFormat("yyyy-MM-dd").parse(registerLab.getReplaced()+"")+"");
-            } catch (ParseException e) {
-                contentValues.put(REGISTERLAB_REPLACED, "");
-                e.printStackTrace();
-            }
+            contentValues.put(REGISTERLAB_REPLACED, registerLab.getReplaced());
         }
 
         int rowEffect = db.update(TBL_REGISTERLAB, contentValues, REGISTERLAB_ID + " = ?",
@@ -571,6 +550,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         return (rowEffect != -1);
     }
 
+    @SuppressLint("SimpleDateFormat")
     public List<RegisterLab> GetAllRegisterLab() {
         SQLiteDatabase db = getReadableDatabase();
         List<RegisterLab> registerLabsList = new ArrayList<RegisterLab>();
@@ -578,17 +558,13 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                try {
-                    registerLabsList.add(new RegisterLab(cursor.getInt(cursor.getColumnIndex(REGISTERLAB_ID)),
-                            cursor.getInt(cursor.getColumnIndex(LAB_ID)),
-                            cursor.getInt(cursor.getColumnIndex(USER_ID)),
-                            cursor.getString(cursor.getColumnIndex(REGISTERLAB_SESSION)),
-                            new SimpleDateFormat("yyyy/MM/dd").parse(cursor.getString(cursor.getColumnIndex(REGISTERLAB_TIME))),
-                            cursor.getInt(cursor.getColumnIndex(TERM_ID)),
-                            new SimpleDateFormat("yyyy/MM/dd").parse(cursor.getString(cursor.getColumnIndex(REGISTERLAB_REPLACED)))));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                registerLabsList.add(new RegisterLab(cursor.getInt(cursor.getColumnIndex(REGISTERLAB_ID)),
+                        cursor.getInt(cursor.getColumnIndex(LAB_ID)),
+                        cursor.getInt(cursor.getColumnIndex(USER_ID)),
+                        cursor.getString(cursor.getColumnIndex(REGISTERLAB_SESSION)),
+                        cursor.getString(cursor.getColumnIndex(REGISTERLAB_TIME)),
+                        cursor.getInt(cursor.getColumnIndex(TERM_ID)),
+                        cursor.getString(cursor.getColumnIndex(REGISTERLAB_REPLACED))));
             } while (cursor.moveToNext());
             cursor.close();
         }
