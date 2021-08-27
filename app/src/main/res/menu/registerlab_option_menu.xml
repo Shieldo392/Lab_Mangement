@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/itemAdd"
+    <item android:id="@+id/itemRegisterLabAdd"
         android:title="Thêm"></item>
-    <item android:id="@+id/itemUpdate"
+    <item android:id="@+id/itemRegisterLabUpdate"
         android:title="Sửa"></item>
 </menu>

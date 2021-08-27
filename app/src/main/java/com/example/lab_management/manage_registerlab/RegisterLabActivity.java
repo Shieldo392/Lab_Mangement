@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
@@ -16,19 +17,20 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.lab_management.R;
+import com.example.lab_management.manage_registerlab.adapter.RegisterLabAdapter;
 import com.example.lab_management.objects.Lab;
 import com.example.lab_management.objects.RegisterLab;
 import com.example.lab_management.objects.Term;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,15 +62,15 @@ public class RegisterLabActivity extends AppCompatActivity {
     Button btnPickTime, btnPickReplaced;
     Switch switchReplaced;
     ListView listRegisterLab;
+    ImageButton imgOptionMenu;
+    PopupMenu popupMenu = null;
     int curIndexSelected = -1;
 
-    ArrayAdapter<RegisterLab> adapterRegisterLab;
+    RegisterLabAdapter adapterRegisterLab;
 
     List<String> labs, sessions, terms; // hien thi len man hinh
     List<Integer> labsID, termsID; // luu vi tri tren list va lay ra id
     ArrayAdapter<String> adapterLab, adapterSession, adapterTerm;
-
-    DateFormat df_vn = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,10 +81,10 @@ public class RegisterLabActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.itemAdd:
+            case R.id.itemRegisterLabAdd:
                 AddRegiterLab();
                 return true;
-            case R.id.itemUpdate:
+            case R.id.itemRegisterLabUpdate:
                 UpdateRegisterLab();
                 return true;
         }
@@ -98,23 +100,15 @@ public class RegisterLabActivity extends AppCompatActivity {
         registerLabInfo.setUserID(userID); // TODO: get user static
         registerLabInfo.setSession(spinSession.getSelectedItem() + "");
 
-        try {
-            registerLabInfo.setTime(df_vn.parse(editTime.getText() + ""));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        registerLabInfo.setTime(editTime.getText() + "");
 
         registerLabInfo.setTermID(termsID.get(spinTerm.getSelectedItemPosition()));
         registerLabInfo.setLabID(labsID.get(spinLab.getSelectedItemPosition()));
         if (switchReplaced.isChecked()){
-            try{
-                registerLabInfo.setTime(df_vn.parse(editReplaced.getText()+""));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+            registerLabInfo.setReplaced(editReplaced.getText()+"");
         }
         else{
-            registerLabInfo.setTime(null);
+            registerLabInfo.setReplaced(null);
         }
         boolean result = SqLiteHelper.getInstance(RegisterLabActivity.this).Insert_RegisterLab(registerLabInfo);
         if (result){
@@ -131,25 +125,18 @@ public class RegisterLabActivity extends AppCompatActivity {
         if (curIndexSelected >= 0){
             RegisterLab registerLabInfo = new RegisterLab();
 
-            //registerLabInfo.getRegisterID(adapterRegisterLab.getItem(curIndexSelected).getRegisterID());
+            registerLabInfo.setRegisterID(adapterRegisterLab.getItem(curIndexSelected).getRegisterID());
             registerLabInfo.setLabID(labsID.get(spinLab.getSelectedItemPosition()));
             SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
-            int userID = Integer.parseInt(Objects.requireNonNull(share.getString("user_id", "1")));
+            int userID = share.getInt("user_id", 1);
             registerLabInfo.setUserID(userID);
             registerLabInfo.setSession(spinSession.getSelectedItem() + "");
-            try {
-                registerLabInfo.setTime(df_vn.parse(editTime.getText() + ""));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+
+            registerLabInfo.setTime(editTime.getText() + "");
 
             registerLabInfo.setTermID(termsID.get(spinTerm.getSelectedItemPosition()));
             if (switchReplaced.isChecked()){
-                try {
-                    registerLabInfo.setReplaced(df_vn.parse(editTime.getText() + ""));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
+                registerLabInfo.setReplaced(editReplaced.getText() + "");
             }
             else{
                 registerLabInfo.setReplaced(null);
@@ -181,6 +168,8 @@ public class RegisterLabActivity extends AppCompatActivity {
         switchReplaced = findViewById(R.id.switchThayTheLyThuyet);
 
         listRegisterLab = findViewById(R.id.listDangKyPhongThucHanh);
+
+        imgOptionMenu = findViewById(R.id.option_menu);
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     void GetData(){
@@ -205,6 +194,7 @@ public class RegisterLabActivity extends AppCompatActivity {
             terms.add(term.getTermName());
             termsID.add(term.getTermID());
         });
+
         //terms = Arrays.asList("141341341", "346356456745", "34235346457");
 
         adapterLab = new ArrayAdapter<>(RegisterLabActivity.this, android.R.layout.simple_spinner_item, labs);
@@ -221,10 +211,12 @@ public class RegisterLabActivity extends AppCompatActivity {
 
 
         Date today = Calendar.getInstance().getTime();
-        String todayAsString = df_vn.format(today);
+        @SuppressLint("SimpleDateFormat")
+        String todayAsString = new SimpleDateFormat("dd/MM/yyyy").format(today);
         editTime.setText(todayAsString);
         editReplaced.setText(todayAsString);
     }
+    @SuppressLint("SetTextI18n")
     void setEvents(){
         switchReplaced.setChecked(false);
         editReplaced.setEnabled(false);
@@ -283,13 +275,13 @@ public class RegisterLabActivity extends AppCompatActivity {
             spinLab.setSelection(labsID.indexOf(registerLab.getLabID()));
             spinSession.setSelection(adapterSession.getPosition(registerLab.getSession()));
 
-            editTime.setText(df_vn.format(registerLab.getTime()) + "");
+            editTime.setText(registerLab.getTime());
 
             spinTerm.setSelection(termsID.indexOf(registerLab.getTermID()));
 
-            if (!registerLab.getReplaced().equals("")){
+            if (registerLab.getReplaced() != null && !registerLab.getReplaced().equals("")){
                 switchReplaced.setChecked(true);
-                editReplaced.setText(df_vn.format(registerLab.getReplaced()));
+                editReplaced.setText(registerLab.getReplaced());
             }
             else{
                 switchReplaced.setChecked(false);
@@ -316,12 +308,40 @@ public class RegisterLabActivity extends AppCompatActivity {
                     .show();
             return false;
         });
+
+        popupMenu = new PopupMenu(this, imgOptionMenu);
+        popupMenu.inflate(R.menu.registerlab_option_menu);
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()){
+                case R.id.itemRegisterLabAdd:
+                    new AlertDialog.Builder(RegisterLabActivity.this)
+                        .setTitle("Xác nhận")
+                        .setNegativeButton("Hủy", (dialog, which) -> { })
+                        .setPositiveButton("Thêm", (dialog, which) -> AddRegiterLab())
+                        .setMessage("Bạn có muốn thêm không?")
+                        .show();
+                    break;
+                case R.id.itemRegisterLabUpdate:
+                    new AlertDialog.Builder(RegisterLabActivity.this)
+                            .setTitle("Xác nhận")
+                            .setNegativeButton("Hủy", (dialog, which) -> { })
+                            .setPositiveButton("Cập nhật", (dialog, which) -> UpdateRegisterLab())
+                            .setMessage("Bạn có muốn cập nhật không?")
+                            .show();
+                    break;
+            }
+
+            return false;
+        });
+
+        imgOptionMenu.setOnClickListener(v -> popupMenu.show());
     }
 
     void refreshDataForListview(){
         try{
             List<RegisterLab> dangKyList = SqLiteHelper.getInstance(this).GetAllRegisterLab();
-            adapterRegisterLab = new ArrayAdapter<>(RegisterLabActivity.this, android.R.layout.simple_list_item_1, dangKyList);
+            adapterRegisterLab = new RegisterLabAdapter(RegisterLabActivity.this, R.layout.item_registerlab, dangKyList);
             listRegisterLab.setAdapter(adapterRegisterLab);
             adapterRegisterLab.notifyDataSetChanged();
         }

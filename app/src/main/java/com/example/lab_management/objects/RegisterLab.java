@@ -7,12 +7,12 @@ public class RegisterLab {
     private int labID;
     private int userID;
     private String session; // ca thực hành
-    private Date time; // thứ mấy trong tuần
+    private String time; // thứ mấy trong tuần
     //private int count; // số buổi thực hành // we dont need it anymore
     private int termID;
-    private Date replaced; // thay the ly thuyet
+    private String replaced; // thay the ly thuyet
 
-    public RegisterLab(int registerID, int labID, int userID, String session, Date time, int termID, Date replaced) {
+    public RegisterLab(int registerID, int labID, int userID, String session, String time, int termID, String replaced) {
         this.registerID = registerID;
         this.labID = labID;
         this.userID = userID;
@@ -57,11 +57,9 @@ public class RegisterLab {
         this.session = session;
     }
 
-    public Date getTime() {
-        return time;
-    }
+    public String getTime() { return time; }
 
-    public void setTime(Date time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -73,11 +71,11 @@ public class RegisterLab {
         this.termID = termID;
     }
 
-    public Date getReplaced() {
+    public String getReplaced() {
         return replaced;
     }
 
-    public void setReplaced(Date replaced) {
+    public void setReplaced(String replaced) {
         this.replaced = replaced;
     }
 

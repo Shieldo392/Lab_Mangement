@@ -128,7 +128,7 @@ public class FakeData {
                 Log.e("AAAAAAA", "Insert_Subject_Term: " + term.getTermID());
                 long result = sqliteHelper.Insert_Term(term);
                 if (result == -1) {
-                    Toast.makeText(context, "Them khong thanh cong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Them khong thanh cong! Insert_Subject_Term", Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -140,15 +140,16 @@ public class FakeData {
         SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
         List<RegisterLab> list = new ArrayList<>();
         // int registerID, int labID, int userID, String session, Date time, int termID, Date replaced
-        list.add(new RegisterLab(1, 1, 1, "1, 2, 3", DateUtility.Date(2020, 3, 4), 1, DateUtility.Date(2021, 5, 3)));
-        list.add(new RegisterLab(2, 1, 1, "4, 5, 6", DateUtility.Date(2020, 3, 4), 2, DateUtility.Date(2021, 5, 3)));
-        list.add(new RegisterLab(2, 2, 2, "1, 2, 3", DateUtility.Date(2020, 3, 4), 3, DateUtility.Date(2021, 5, 3)));
+        list.add(new RegisterLab(1, 1, 1, "1, 2, 3", "04/03/2020", 1, "04/03/2020"));
+        list.add(new RegisterLab(2, 1, 1, "4, 5, 6", "04/03/2020", 2, "04/03/2020"));
+        list.add(new RegisterLab(2, 2, 2, "1, 2, 3", "04/03/2020", 3, "04/03/2020"));
 
         if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_REGISTERLAB) <= 0){
             for (RegisterLab registerLab : list) {
                 boolean result = sqliteHelper.Insert_RegisterLab(registerLab);
                 if (result) {
-                    Toast.makeText(context, "Them khong thanh cong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Them khong thanh cong! Insert_RegisterLab", Toast.LENGTH_SHORT).show();
+                    System.out.println("Them khong thanh cong! Insert_RegisterLab");
                 }
             }
         }
