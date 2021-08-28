@@ -66,6 +66,147 @@
                 android:id="@+id/edt_note"/>
         </TableRow>
     </TableLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/teal_700"
+        android:text="THỐNG KÊ THIẾT BỊ"
+        android:textColor="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dp"/>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_margin="5dp">
+            <TextView
+                android:text="STT"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Tên thiết bị"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="Số lượng hỏng"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="Tổng số"/>
+        </TableRow>
+        <TableRow
+            android:layout_margin="5dp">
+            <TextView
+                android:text="1"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Chuột"/>
+            <TextView
+                android:id="@+id/tv_mouse_broken"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="0"/>
+            <TextView
+                android:id="@+id/tv_mouses"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="1"/>
+        </TableRow>
+        <TableRow
+            android:layout_margin="5dp">
+
+            <TextView
+                android:layout_height="match_parent"
+                android:text="2" />
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Màn hình"/>
+            <TextView
+                android:id="@+id/monitor_broken"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="10"/>
+            <TextView
+                android:id="@+id/monitor"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="1"/>
+        </TableRow>
+        <TableRow
+            android:layout_margin="5dp">
+            <TextView
+                android:text="3"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Case"/>
+            <TextView
+                android:id="@+id/case_broken"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="10"/>
+            <TextView
+                android:id="@+id/cases"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="10"/>
+        </TableRow>
+        <TableRow
+            android:layout_margin="5dp">
+            <TextView
+                android:text="4"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Bàn phím"/>
+            <TextView
+                android:id="@+id/keyboard_broken"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="10"/>
+            <TextView
+                android:id="@+id/keyboards"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="11"/>
+        </TableRow>
+        <TableRow
+            android:layout_margin="5dp">
+            <TextView
+                android:text="5"/>
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="1"
+                android:text="Máy chiếu"/>
+            <TextView
+                android:id="@+id/projector_broken"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_column="3"
+                android:text="10"/>
+            <TextView
+                android:id="@+id/projectors"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="11"/>
+        </TableRow>
+
+
+    </TableLayout>
 
 
 

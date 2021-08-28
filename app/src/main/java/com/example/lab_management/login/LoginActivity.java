@@ -84,7 +84,8 @@ public class LoginActivity extends AppCompatActivity {
         User user = sqLiteHelper.GetUser(user_check);
         List<User> users = sqLiteHelper.Get_User();
 
-        if(!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
+        boolean isNull = user!=null;
+        if(isNull&&!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
         {
             sharedPreferences.edit().putInt("user_id", user.getId_user()).apply();
             return user_check;

@@ -364,19 +364,21 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     }
 
     public User GetUser(String username){
-        User user = new User();
+
         SQLiteDatabase db = getReadableDatabase();
         String sql = "select * from " + TBL_USER +" where " + USER_NAME +" = ?";
         Cursor cursor= db.rawQuery(sql, new String[]{username});
         if (cursor != null && cursor.moveToFirst()){
             do{
+                User user = new User();
                 String user_name = cursor.getString(cursor.getColumnIndex(USER_NAME));
                 String password = cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
                 user.setUserName(user_name);
                 user.setPassword(password);
+                return user;
             }while (cursor.moveToNext());
         }
-        return user;
+        return null;
     }
 
 
