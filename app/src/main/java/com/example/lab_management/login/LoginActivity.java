@@ -84,6 +84,19 @@ public class LoginActivity extends AppCompatActivity {
         User user = sqLiteHelper.GetUser(user_check);
         List<User> users = sqLiteHelper.Get_User();
 
+        SQLiteDatabase db = openOrCreateDatabase("Lab_Management", Context.MODE_PRIVATE,null);
+        Cursor cursor = db.rawQuery("select * from user where user_name = ? and user_password = ? ",new String[]{user_check,pass_check});
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String username = cursor.getString(1);
+            String password = cursor.getString(2);
+            SharedPreferences.Editor sp = getSharedPreferences("username",MODE_PRIVATE).edit();
+            sp.putString("user_name",username);
+            sp.apply();
+            cursor.close();
+            return username;
+        }
+
         if(!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
         {
             sharedPreferences.edit().putInt("user_id", user.getId_user()).apply();

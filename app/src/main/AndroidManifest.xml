@@ -4,16 +4,17 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_haui"
+        android:icon="@drawable/logo_icon"
         android:label="Quản lý phòng Lab"
-        android:roundIcon="@drawable/logo_haui"
+        android:roundIcon="@drawable/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
         <activity android:name=".manage_labs.EditLabActivity"></activity>
         <activity android:name=".manage_labs.AddLabActivity" />
         <activity android:name=".manage_labs.ManageLabs" />
         <activity android:name=".manage_registerlab.RegisterLabActivity" />
-        <activity android:name=".login.SignUp" />
+        <activity android:name=".login.SignUp"
+            android:screenOrientation="portrait"/>
         <activity android:name=".manage_device.EditDevice" />
         <activity android:name=".manage_device.ListDevice" />
         <activity android:name=".manage_device.AddDeviceActivity" />
