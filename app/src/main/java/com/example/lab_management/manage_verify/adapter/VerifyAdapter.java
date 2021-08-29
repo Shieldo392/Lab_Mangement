@@ -79,7 +79,7 @@ public class VerifyAdapter extends BaseAdapter {
         Lab pth = null;
 
         for (Lab lab : labs){
-            if(lab.getLab_ID() == report.getMaPhong())
+            if(lab.getLab_ID() == report.getLabID())
             {
                 pth = lab;
                 break;
@@ -89,7 +89,7 @@ public class VerifyAdapter extends BaseAdapter {
         if(gv!=null && pth!= null){
             tvGV.setText(pth.getLab_Name()+" - " +gv.getFullName());
 
-        } else tvGV.setText(report.getMaPhong()+" - " +report.getName());
+        } else tvGV.setText(report.getLabID()+" - " +report.getName());
 
 
         String strHeader = "Mã phiếu: MP"+ report.getId() +"";

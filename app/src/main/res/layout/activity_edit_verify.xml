@@ -44,7 +44,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="120dp"
                     android:textColor="@color/black"
-                    android:text="Mã Phòng"/>
+                    android:text="Tên Phòng"/>
                 <Spinner
                     android:textAlignment="viewStart"
                     android:layout_height="30dp"

@@ -25,7 +25,9 @@ public class LabArrayAdapter extends BaseAdapter {
         this.labs = labs;
     }
 
-
+    public void setLabs(List<Lab> labs) {
+        this.labs = labs;
+    }
 
     @Override
     public int getCount() {

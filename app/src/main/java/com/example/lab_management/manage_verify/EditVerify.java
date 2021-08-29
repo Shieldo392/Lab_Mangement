@@ -8,7 +8,6 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,7 +89,7 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
             }
             int index_spinenr_maPhong = -1;
             for (int i = 0; i < labs.size(); i++) {
-                if (labs.get(i).equals(report.getMaPhong()))
+                if (labs.get(i).equals(report.getLabID()))
                     index_spinenr_maPhong = i;
             }
 
@@ -122,7 +121,8 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
         sp_lab.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                deviceList = labs.get(position).getDeviceList();
+                //deviceList = labs.get(position).getDeviceList();
+                deviceList = sqliteHelper.GetListDeviceByLabID(labs.get(position).getLab_ID());
                 deviceApdater.notifyDataSetChanged();
             }
 

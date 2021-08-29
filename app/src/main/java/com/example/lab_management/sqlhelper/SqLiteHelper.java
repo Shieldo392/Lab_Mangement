@@ -416,7 +416,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(VERIFY_LAB_ID, report.getMaPhong());
+        contentValues.put(VERIFY_LAB_ID, report.getLabID());
         contentValues.put(VERIFY_USER_ID, report.getUser_id());
         contentValues.put(VERIFY_SHIFT, report.getShift()?1:0);
         contentValues.put(VERIFY_TIME, report.getTime());
@@ -433,7 +433,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        contentValues.put(VERIFY_LAB_ID, report.getMaPhong());
+        contentValues.put(VERIFY_LAB_ID, report.getLabID());
         contentValues.put(VERIFY_USER_ID, report.getUser_id());
         contentValues.put(VERIFY_SHIFT, report.getShift()?1:0);
         contentValues.put(VERIFY_TIME, report.getTime());
@@ -446,7 +446,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     public int Delete_Verify_By_ID(int id){
         SQLiteDatabase db = getWritableDatabase();
-        int rowID = db.delete(TBL_VERIFY, "id=?", new String[]{id+""});
+        int rowID = db.delete(TBL_VERIFY, VERIFY_ID+"=?", new String[]{id+""});
         db.close();
         return rowID;
     }
