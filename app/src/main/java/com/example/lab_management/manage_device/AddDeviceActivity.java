@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,6 +39,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AddDeviceActivity extends AppCompatActivity {
     EditText editNgayNhap, editGhiChu;
@@ -73,10 +76,8 @@ public class AddDeviceActivity extends AppCompatActivity {
     }
     void getSpinnerDat(){
         labs = sqliteHelper.Get_Lab();
-        //setDeviceListEachLab(labs);
         adapter_lab = new LabArrayAdapter(AddDeviceActivity.this, R.layout.item_spinner, labs);
         spnTenphong.setAdapter(adapter_lab);
-
 
         spnTenphong.setSelection(0);
         loaitb = Arrays.asList("Màn hình","Case","Chuột","Bàn phím","Máy chiếu");
@@ -187,10 +188,15 @@ public class AddDeviceActivity extends AppCompatActivity {
         else if(radHong.isChecked()){
             tinhTrang = "Hỏng";
         }
+        Pattern special = Pattern.compile("[!@#$,?.*%&*()_+=|<>?{}\\[\\]~-]");
+        Matcher hasSpecial = special.matcher(tenTb);
         String ngaylap = editNgayNhap.getText().toString().trim();
         String ghiChu = editGhiChu.getText().toString().trim();
         if(tenTb.isEmpty()){
             Toast.makeText(getBaseContext(), "Vui lòng nhập tên thiết bị thông tin", Toast.LENGTH_SHORT).show();
+        }
+        else if(hasSpecial.find()==true){
+            Toast.makeText(getBaseContext(), "Tên thiết bị không được chứa ký tự đặc biệt", Toast.LENGTH_SHORT).show();
         }
         else{
             Device dv = new Device(0,tenTb,loaitb,lab.getLab_ID(),tinhTrang,ngaylap,ghiChu);
