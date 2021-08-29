@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.lab_management.manage_device.ListDevice;
 import com.example.lab_management.manage_labs.ManageLabs;
@@ -18,12 +19,17 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout ln_manage_verify_report;
     LinearLayout ln_manage_registerlab;
     LinearLayout ln_manage_device, ln_manage_labs;
+    TextView hello_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWidgets();
+
+        String username = getSharedPreferences("username",MODE_PRIVATE).getString("user_name","");
+        hello_user.setText("Xin chào " + username);
+
         setOnClickEvent();
     }
 
@@ -63,5 +69,6 @@ public class MainActivity extends AppCompatActivity {
         ln_manage_registerlab = findViewById(R.id.ln_manage_registerlab);
         ln_manage_device = findViewById(R.id.ln_manage_device);
         ln_manage_labs = findViewById(R.id.ln_manage_labs);
+        hello_user = findViewById(R.id.tv_hello);
     }
 }

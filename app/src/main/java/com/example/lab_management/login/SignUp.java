@@ -55,9 +55,12 @@ public class SignUp extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String user = edt_username.getText()+"";
                 String pass = edt_password.getText()+"";
                 String pass_confirm = edt_passconfirm.getText()+"";
-                if (pass.equals(pass_confirm)) {
+                if(user.equals("")) Toast.makeText(SignUp.this,"Tên tài khoản không để trống",Toast.LENGTH_SHORT).show();
+                if(pass.equals("")) Toast.makeText(SignUp.this,"Mật khẩu không để trống",Toast.LENGTH_SHORT).show();
+                else if (pass.equals(pass_confirm)) {
                     addUser();
                 }
                 else Toast.makeText(SignUp.this,"Mật khẩu không khớp",Toast.LENGTH_SHORT).show();

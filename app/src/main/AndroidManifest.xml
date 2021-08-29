@@ -4,22 +4,22 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/logo_haui"
+        android:icon="@drawable/logo_icon"
         android:label="Quản lý phòng Lab"
-        android:roundIcon="@drawable/logo_haui"
+        android:roundIcon="@drawable/logo_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
-        <activity android:name=".manage_labs.EditLabActivity"></activity>
-        <activity android:name=".manage_labs.AddLabActivity" />
-        <activity android:name=".manage_labs.ManageLabs" />
-        <activity android:name=".manage_registerlab.RegisterLabActivity" />
-        <activity android:name=".login.SignUp" />
-        <activity android:name=".manage_device.EditDevice" />
-        <activity android:name=".manage_device.ListDevice" />
-        <activity android:name=".manage_device.AddDeviceActivity" />
-        <activity android:name=".manage_verify.ListVerify" />
-        <activity android:name=".manage_verify.EditVerify" />
-        <activity android:name=".manage_verify.AddNewVerify" />
+        <activity android:name=".manage_labs.EditLabActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name=".manage_labs.AddLabActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_labs.ManageLabs" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_registerlab.RegisterLabActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".login.SignUp" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_device.EditDevice" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_device.ListDevice" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_device.AddDeviceActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_verify.ListVerify" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_verify.EditVerify" android:screenOrientation="portrait"/>
+        <activity android:name=".manage_verify.AddNewVerify" android:screenOrientation="portrait"/>
         <activity
             android:name=".login.LoginActivity"
             android:screenOrientation="portrait">
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

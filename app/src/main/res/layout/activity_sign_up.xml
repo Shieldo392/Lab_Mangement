@@ -158,7 +158,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:id="@+id/btnNgaySinh"
-                android:background="#FFC107"
+                android:background="@drawable/border_button_login"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
