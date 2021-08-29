@@ -21,6 +21,7 @@ import com.example.lab_management.manage_verify.adapter.VerifyAdapter;
 import com.example.lab_management.objects.Device;
 import com.example.lab_management.objects.VerifyReport;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
+import com.example.lab_management.utils.FakeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class ListDevice extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_device);
         getWidgets();
-
+        FakeData.Insert_Device(ListDevice.this);
         sqliteHelper = SqLiteHelper.getInstance(ListDevice.this);
         list = sqliteHelper.Get_Device();
         if (list.size()<=0)

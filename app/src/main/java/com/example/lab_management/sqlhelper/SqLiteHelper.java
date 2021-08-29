@@ -263,7 +263,13 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         }
         return list;
     }
-
+    public int Get_Count_Device(){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "Select * from "+TBL_DEVICE;
+        Cursor cursor = db.rawQuery(sql,null);
+        int count = cursor.getCount();
+        return count;
+    }
     //tbl_lab
     public int Get_Count_Lab(){
         SQLiteDatabase db = getReadableDatabase();
