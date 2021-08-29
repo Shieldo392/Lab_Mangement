@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,7 @@ import com.example.lab_management.objects.RegisterLab;
 import com.example.lab_management.objects.Term;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,6 +57,9 @@ public class RegisterLabActivity extends AppCompatActivity {
         GetData();
 
         refreshDataForListview();
+
+        SharedPreferences share = getSharedPreferences("user", MODE_PRIVATE);
+        userID = share.getInt("user_id", 1);
     }
 
     Spinner spinLab, spinSession, spinTerm;
@@ -65,6 +70,8 @@ public class RegisterLabActivity extends AppCompatActivity {
     ImageButton imgOptionMenu;
     PopupMenu popupMenu = null;
     int curIndexSelected = -1;
+
+    int userID;
 
     RegisterLabAdapter adapterRegisterLab;
 
@@ -78,6 +85,7 @@ public class RegisterLabActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -91,12 +99,11 @@ public class RegisterLabActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void AddRegiterLab() {
         RegisterLab registerLabInfo = new RegisterLab();
         //registerLabInfo.setRegisterID();
 
-        SharedPreferences share = getSharedPreferences("username",MODE_PRIVATE);
-        int userID = Integer.parseInt(Objects.requireNonNull(share.getString("user_id", "1")));
         registerLabInfo.setUserID(userID); // TODO: get user static
         registerLabInfo.setSession(spinSession.getSelectedItem() + "");
 
@@ -121,14 +128,13 @@ public class RegisterLabActivity extends AppCompatActivity {
         refreshDataForListview();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void UpdateRegisterLab(){
         if (curIndexSelected >= 0){
             RegisterLab registerLabInfo = new RegisterLab();
 
             registerLabInfo.setRegisterID(adapterRegisterLab.getItem(curIndexSelected).getRegisterID());
             registerLabInfo.setLabID(labsID.get(spinLab.getSelectedItemPosition()));
-            SharedPreferences share = getSharedPreferences("user",MODE_PRIVATE);
-            int userID = share.getInt("user_id", 1);
             registerLabInfo.setUserID(userID);
             registerLabInfo.setSession(spinSession.getSelectedItem() + "");
 
@@ -216,6 +222,7 @@ public class RegisterLabActivity extends AppCompatActivity {
         editTime.setText(todayAsString);
         editReplaced.setText(todayAsString);
     }
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     void setEvents(){
         switchReplaced.setChecked(false);
@@ -270,6 +277,7 @@ public class RegisterLabActivity extends AppCompatActivity {
 
             // fill
             RegisterLab registerLab = adapterRegisterLab.getItem(position);
+            adapterRegisterLab.SetSelectedView(view);
 
             // kho vl
             spinLab.setSelection(labsID.indexOf(registerLab.getLabID()));
@@ -338,9 +346,24 @@ public class RegisterLabActivity extends AppCompatActivity {
         imgOptionMenu.setOnClickListener(v -> popupMenu.show());
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     void refreshDataForListview(){
         try{
-            List<RegisterLab> dangKyList = SqLiteHelper.getInstance(this).GetAllRegisterLab();
+            List<RegisterLab> dangKyList = SqLiteHelper.getInstance(this).GetAllRegisterLabByUserID(userID);
+            // sort by time
+            dangKyList.sort((registerLabLow, registerLabHigh) -> {
+                try {
+                    @SuppressLint("SimpleDateFormat") Date dateLow = new SimpleDateFormat("dd/MM/yyyy").parse(registerLabLow.getTime());
+                    @SuppressLint("SimpleDateFormat") Date dateHigh = new SimpleDateFormat("dd/MM/yyyy").parse(registerLabHigh.getTime());
+
+                    assert dateHigh != null;
+                    return dateHigh.compareTo(dateLow);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    return 0;
+                }
+            });
+
             adapterRegisterLab = new RegisterLabAdapter(RegisterLabActivity.this, R.layout.item_registerlab, dangKyList);
             listRegisterLab.setAdapter(adapterRegisterLab);
             adapterRegisterLab.notifyDataSetChanged();

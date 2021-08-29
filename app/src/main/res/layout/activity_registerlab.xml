@@ -15,10 +15,10 @@ tools:context=".manage_registerlab.RegisterLabActivity">
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#A1F34F"
+            android:background="#348CCF"
             android:gravity="center"
-            android:text="Đăng ký phòng thực hành"
-            android:textColor="#000000"
+            android:text="ĐĂNG KÝ PHÒNG THỰC HÀNH"
+            android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
         <ImageButton
@@ -39,7 +39,7 @@ tools:context=".manage_registerlab.RegisterLabActivity">
 
     <TableLayout
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="270dp"
     android:orientation="vertical"
     android:stretchColumns="*"
     android:shrinkColumns="*">
@@ -89,8 +89,7 @@ tools:context=".manage_registerlab.RegisterLabActivity">
     </TableRow>
 
         <TableRow
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/textView6"
@@ -174,10 +173,10 @@ tools:context=".manage_registerlab.RegisterLabActivity">
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:background="#A1F34F"
+        android:background="#348CCF"
         android:gravity="center"
-        android:text="Danh sách đăng ký thực hành"
-        android:textColor="#000000"
+        android:text="DANH SÁCH ĐĂNG KÝ"
+        android:textColor="#FFFFFF"
         android:textSize="18sp" />
 
 <ListView

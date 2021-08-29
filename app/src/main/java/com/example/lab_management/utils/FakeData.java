@@ -104,8 +104,8 @@ public class FakeData {
     public static void Insert_Subject_Term(Context context){
         SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
         List<Subject> list1 = new ArrayList<>();
-        list1.add(new Subject(1, 1, "Lập trình ăn roi"));
-        list1.add(new Subject(1, 2, "lập trình pờ hắt pừ"));
+        list1.add(new Subject(1, "Lập trình ăn roi"));
+        list1.add(new Subject(2, "lập trình pờ hắt pừ"));
 
         if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_SUBJECT) <= 0){
             for (Subject subject : list1) {
