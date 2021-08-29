@@ -15,8 +15,38 @@
         android:textSize="20dp"
         android:gravity="center"
         android:id="@+id/tv_header"/>
-    <ListView
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:id="@+id/rl_sp"
         android:layout_below="@id/tv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:background="@drawable/border_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/sp_labs"/>
+        </LinearLayout>
+        <TextView
+            android:gravity="top"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sắp xếp theo phòng"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_below="@id/rl_sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/lv_report"/>

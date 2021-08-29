@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 public class VerifyReport implements Parcelable{
     private int id;
-    private int maPhong;
+    private int labID;
     private int user_id; // tên giảng viên
     private boolean shift; //true: ca sáng, false: ca chiều
     private String time; // Thứ làm việc (Thứ 2 -> chủ nhật) <=> (2-8)
@@ -13,11 +13,15 @@ public class VerifyReport implements Parcelable{
 
     public VerifyReport(int id, int maPhong, int tenGV, boolean shift, String time, String note) {
         this.id = id;
-        this.maPhong = maPhong;
+        this.labID = maPhong;
         this.user_id = tenGV;
         this.shift = shift;
         this.time = time;
         this.note = note;
+    }
+
+    public VerifyReport() {
+
     }
 
     public int getUser_id() {
@@ -32,12 +36,12 @@ public class VerifyReport implements Parcelable{
         return shift;
     }
 
-    public int getMaPhong() {
-        return maPhong;
+    public int getLabID() {
+        return labID;
     }
 
-    public void setMaPhong(int maPhong) {
-        this.maPhong = maPhong;
+    public void setLabID(int labID) {
+        this.labID = labID;
     }
 
     public int getId() {
@@ -94,17 +98,17 @@ public class VerifyReport implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.id);
-        dest.writeInt(this.maPhong);
+        dest.writeInt(this.labID);
         dest.writeInt(this.user_id);
-        dest.writeBoolean(this.shift);
+        dest.writeByte((byte) (this.shift?1:0));
         dest.writeString(this.time);
         dest.writeString(this.note);
     }
     public VerifyReport(Parcel in){
         this.id = in.readInt();
-        this.maPhong = in.readInt();
+        this.labID = in.readInt();
         this.user_id = in.readInt();
-        this.shift = in.readBoolean();
+        this.shift = in.readByte()!=0;
         this.time = in.readString();
         this.note = in.readString();
 
