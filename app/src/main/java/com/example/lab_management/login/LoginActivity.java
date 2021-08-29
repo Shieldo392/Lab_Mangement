@@ -23,7 +23,6 @@ import com.example.lab_management.utils.FakeData;
 
 import java.util.List;
 
-
 public class LoginActivity extends AppCompatActivity {
     Button btn_login,btn_signup;
     EditText edt_username,edt_password;
@@ -84,8 +83,19 @@ public class LoginActivity extends AppCompatActivity {
         User user = sqLiteHelper.GetUser(user_check);
         List<User> users = sqLiteHelper.Get_User();
 
-        boolean isNull = user!=null;
-        if(isNull&&!user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
+        SQLiteDatabase db = openOrCreateDatabase("Lab_Management", Context.MODE_PRIVATE,null);
+        Cursor cursor = db.rawQuery("select * from user where user_name = ? and user_password = ? ",new String[]{user_check,pass_check});
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            String username = cursor.getString(1);
+            String password = cursor.getString(2);
+            SharedPreferences.Editor sp = getSharedPreferences("username",MODE_PRIVATE).edit();
+            sp.putString("user_name",username);
+            sp.apply();
+            cursor.close();
+        }
+
+        if(user!= null && !user.getPassword().isEmpty() && user.getPassword().equals(pass_check))
         {
             sharedPreferences.edit().putInt("user_id", user.getId_user()).apply();
             return user_check;

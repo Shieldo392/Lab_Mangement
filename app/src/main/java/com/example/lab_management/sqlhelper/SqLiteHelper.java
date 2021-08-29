@@ -364,7 +364,6 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     }
 
     public User GetUser(String username){
-
         SQLiteDatabase db = getReadableDatabase();
         String sql = "select * from " + TBL_USER +" where " + USER_NAME +" = ?";
         Cursor cursor= db.rawQuery(sql, new String[]{username});
