@@ -37,6 +37,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EditDevice extends AppCompatActivity {
     EditText editNgayNhap, editGhiChu;
@@ -226,8 +228,13 @@ public class EditDevice extends AppCompatActivity {
                 tinhTrang = "Hỏng";
             }
             int maTB = device.getMaTb();
+            Pattern special = Pattern.compile("[!@#$,?.*%&*()_+=|<>?{}\\[\\]~-]");
+            Matcher hasSpecial = special.matcher(autoTenTb.getText().toString());
             if(autoTenTb.getText().toString().isEmpty()){
-                Toast.makeText(getBaseContext(), "Vui lòng nhập tên thiết bị thông tin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Vui lòng nhập tên thiết bị muốn sửa", Toast.LENGTH_SHORT).show();
+            }
+            else if(hasSpecial.find()==true){
+                Toast.makeText(getBaseContext(), "Tên thiết bị không được chứa ký tự đặc biệt", Toast.LENGTH_SHORT).show();
             }
             else{
                 dv = new Device(maTB, autoTenTb.getText().toString(),
