@@ -3,6 +3,7 @@ package com.example.lab_management.objects;
 import java.util.Date;
 
 public class RegisterLab {
+    private int index;
     private int registerID;
     private int labID;
     private int userID;

@@ -1,12 +1,10 @@
 package com.example.lab_management.objects;
 
 public class Subject {
-    private int index;
     private int SubjectID;
     private String SubjectName;
 
-    public Subject(int index, int subjectID, String subjectName) {
-        this.index = index;
+    public Subject(int subjectID, String subjectName) {
         SubjectID = subjectID;
         SubjectName = subjectName;
     }

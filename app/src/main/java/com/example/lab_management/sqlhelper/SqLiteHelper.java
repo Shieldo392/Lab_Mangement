@@ -25,7 +25,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 9;
+    public static final int DB_VERSION = 11;
 
     // tbl_VerifyReport
     public static final String TBL_VERIFY = "verify_report";
@@ -289,6 +289,22 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         }
         db.close();
         return list;
+    }
+
+    public Lab GetLabByID(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "Select * from " + TBL_LAB + " WHERE " + LAB_ID + " = " + id;
+        Cursor cursor = db.rawQuery(sql, null);
+        Lab lab = null;
+        if(cursor!= null && cursor.moveToFirst()) {
+            lab = new Lab(cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4));
+        }
+        db.close();
+        return lab;
     }
 
     public long Insert_Lab(Lab lab){
@@ -558,10 +574,10 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public List<RegisterLab> GetAllRegisterLab() {
+    public List<RegisterLab> GetAllRegisterLabByUserID(int userID) {
         SQLiteDatabase db = getReadableDatabase();
         List<RegisterLab> registerLabsList = new ArrayList<RegisterLab>();
-        String sql = "SELECT * FROM " + TBL_REGISTERLAB;
+        String sql = "SELECT * FROM " + TBL_REGISTERLAB + " WHERE " + USER_ID + " = " + userID;
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
@@ -601,18 +617,32 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     public List<Term> GetAllTerm() {
         SQLiteDatabase db = getReadableDatabase();
-        List<Term> labsList = new ArrayList<>();
+        List<Term> termsList = new ArrayList<>();
         String sql = "SELECT * FROM " + TBL_TERM;
         Cursor cursor = db.rawQuery(sql, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
-                labsList.add(new Term(cursor.getInt(cursor.getColumnIndex(TERM_ID)),
+                termsList.add(new Term(cursor.getInt(cursor.getColumnIndex(TERM_ID)),
                         cursor.getString(cursor.getColumnIndex(TERM_NAME)),
                         cursor.getInt(cursor.getColumnIndex(SUBJECT_ID))));
             } while (cursor.moveToNext());
             cursor.close();
         }
         db.close();
-        return labsList;
+        return termsList;
+    }
+
+    public Term GetTermByID(int id){
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + TBL_TERM + " WHERE " + TERM_ID + " = " + id;
+        Cursor cursor = db.rawQuery(sql, null);
+        Term term = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            term = new Term(cursor.getInt(cursor.getColumnIndex(TERM_ID)),
+                    cursor.getString(cursor.getColumnIndex(TERM_NAME)),
+                    cursor.getInt(cursor.getColumnIndex(SUBJECT_ID)));
+        }
+        db.close();
+        return term;
     }
 }

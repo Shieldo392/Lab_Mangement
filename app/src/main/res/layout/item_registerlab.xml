@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_registerlab"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:padding="2dp">
 
     <LinearLayout
+        android:id="@+id/subitem_registerlab1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -27,33 +33,37 @@
     </LinearLayout>
 
     <TableRow
+        android:id="@+id/subitem_registerlab2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
 
         <TableRow
-            android:layout_weight="2"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mã phòng: "
+                android:text="Tên phòng: "
                 android:textColor="@color/black" />
 
             <TextView
-                android:id="@+id/txt_item_labid"
+                android:id="@+id/txt_item_labname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="maphong"
+                android:text="tenphong"
                 android:textColor="@color/black" />
         </TableRow>
 
         <TableRow
-            android:layout_weight="3"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_weight="3"
             android:orientation="horizontal">
 
             <TextView
@@ -74,8 +84,12 @@
     </TableRow>
 
     <TableRow
+        android:id="@+id/subitem_registerlab3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
 
         <TableRow
             android:layout_width="wrap_content"
@@ -108,15 +122,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mã học phần: "
+                android:text="Tên học phần: "
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/txt_item_termid"
+                android:id="@+id/txt_item_termname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="mahocphan"
+                android:text="tenhocphan"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="15sp" />
         </TableRow>
@@ -124,11 +138,16 @@
     </TableRow>
 
     <LinearLayout
+        android:id="@+id/subitem_registerlab4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
 
         <TextView
+            android:id="@+id/txt_label_replaced"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ngày học thay thế: " />
@@ -139,11 +158,5 @@
             android:layout_height="wrap_content"
             android:text="thaythe" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="?android:attr/listDivider" />
 
 </LinearLayout>
