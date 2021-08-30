@@ -217,6 +217,7 @@
             <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
 
                 <LinearLayout
+                    android:id="@+id/ln_manage_device"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -236,7 +237,7 @@
                         android:gravity="center"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="Quản lý phòng máy"
+                        android:text="Quản lý thiết bị"
                         android:textColor="@color/black"
                         android:textSize="10dp" />
 
@@ -248,6 +249,7 @@
             <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
 
                 <LinearLayout
+                    android:id="@+id/ln_manage_registerlab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -283,7 +285,9 @@
             android:layout_gravity="center"
             android:layout_weight="1">
 
-            <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
+            <androidx.cardview.widget.CardView
+                style="@style/cardview_itemHome"
+                >
 
                 <LinearLayout
                     android:id="@+id/ln_manage_verify_report"
@@ -314,74 +318,15 @@
 
 
             </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
-
-                <LinearLayout
-                    android:id="@+id/ln_manage_device"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/lab" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:text="Quản lý thiết bị"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView style="@style/cardview_itemHome">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center_horizontal"
-                        android:src="@drawable/signup_form" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:text="Thống kê phòng học"
-                        android:textColor="@color/black"
-                        android:textSize="10dp" />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+               android:layout_weight="1"/>
+            <androidx.cardview.widget.CardView
+                android:layout_weight="1"/>
 
 
         </TableRow>
 
-        <TableRow
+       <!-- <TableRow
             android:layout_gravity="center"
             android:layout_weight="1">
 
@@ -480,7 +425,7 @@
             </androidx.cardview.widget.CardView>
 
 
-        </TableRow>
+        </TableRow>-->
 
     </TableLayout>
 

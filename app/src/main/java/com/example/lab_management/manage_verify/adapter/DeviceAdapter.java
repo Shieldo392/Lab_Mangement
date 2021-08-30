@@ -26,6 +26,10 @@ public class DeviceAdapter extends BaseAdapter {
         this.statusClick = statusClick;
     }
 
+    public void setDeviceList(List<Device> deviceList) {
+        this.deviceList = deviceList;
+    }
+
     @Override
     public int getCount() {
         return (deviceList !=null? deviceList.size() : 0);
@@ -51,7 +55,7 @@ public class DeviceAdapter extends BaseAdapter {
         CheckBox checkBox;
         tvDeviceName = convertView.findViewById(R.id.device_name);
         checkBox = convertView.findViewById(R.id.ckb_status);
-        tvDeviceName.setText(device.getTenTb());
+        tvDeviceName.setText(device.getTenTb() +" (" + device.getLoaitb()+")");
         checkBox.setChecked(true);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

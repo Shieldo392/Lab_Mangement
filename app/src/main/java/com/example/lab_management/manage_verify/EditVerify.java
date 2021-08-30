@@ -123,6 +123,7 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //deviceList = labs.get(position).getDeviceList();
                 deviceList = sqliteHelper.GetListDeviceByLabID(labs.get(position).getLab_ID());
+                deviceApdater.setDeviceList(deviceList);
                 deviceApdater.notifyDataSetChanged();
             }
 
