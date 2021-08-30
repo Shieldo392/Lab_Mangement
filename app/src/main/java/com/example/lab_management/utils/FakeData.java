@@ -100,7 +100,22 @@ public class FakeData {
             }
         }
     }
-
+    public static void Insert_Device(Context context){
+        SqLiteHelper sqLiteHelper=SqLiteHelper.getInstance(context);
+        List<Device> deviceList = new ArrayList<>();
+        deviceList.add(new Device(1,"Chuột acer","Chuột",1,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(2,"MH Dell S2421H","Màn hình",3,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(4,"Case Dell","Case",1,"Hỏng","1/1/2019","Không có"));
+        if(sqLiteHelper.Get_Count_Device()<=0){
+            for(Device device: deviceList){
+                long result = sqLiteHelper.Insert_Device(device);
+                if(result==-1){
+                    Toast.makeText(context, "Thêm thất bại!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
     public static void Insert_Subject_Term(Context context){
         SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
         List<Subject> list1 = new ArrayList<>();
