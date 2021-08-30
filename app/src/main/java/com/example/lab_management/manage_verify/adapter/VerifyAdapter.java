@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,6 +65,10 @@ public class VerifyAdapter extends BaseAdapter {
         List<User> users = sqliteHelper.Get_User();
         List<Lab> labs = sqliteHelper.Get_Lab();
         TextView tv_header, tv_shift_time, tv_note, tvGV;
+        LinearLayout l_background = convertView.findViewById(R.id.ln_background);
+        if(position%2==0)
+            l_background.setBackgroundColor(context.getResources().getColor(R.color.yellow));
+        else l_background.setBackgroundColor(context.getResources().getColor(R.color.white));
         tv_header = convertView.findViewById(R.id.tvSTT);
         tv_shift_time = convertView.findViewById(R.id.tv_shift_time);
         tv_note = convertView.findViewById(R.id.tv_note);
@@ -87,7 +92,7 @@ public class VerifyAdapter extends BaseAdapter {
         }
 
         if(gv!=null && pth!= null){
-            tvGV.setText(pth.getLab_Name()+" - " +gv.getFullName());
+            tvGV.setText("Phòng: " + pth.getLab_Name()+" \t Giảng viên: " +gv.getFullName());
 
         } else tvGV.setText(report.getLabID()+" - " +report.getName());
 
@@ -97,9 +102,9 @@ public class VerifyAdapter extends BaseAdapter {
 
         String strShiftTime = report.getTime() + " - ";
         if(report.getShift()) // true: ca sáng - false: ca chiều
-            strShiftTime += " ca sáng";
-        else strShiftTime+= " ca chiều";
-        tv_shift_time.setText(strShiftTime);
+            strShiftTime += "\t ca sáng";
+        else strShiftTime+= "\t ca chiều";
+        tv_shift_time.setText("Thời gian: " + strShiftTime);
 
         tv_note.setText("Ghi chú: " + report.getNote());
 

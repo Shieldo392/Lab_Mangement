@@ -8,10 +8,12 @@
         android:layout_height="wrap_content">
         <TableRow>
             <TextView
+                android:layout_weight="1"
+                android:textSize="17dp"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/black"
                 android:text="Máy tính"
-                android:layout_width="100dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/device_name"/>
             <CheckBox

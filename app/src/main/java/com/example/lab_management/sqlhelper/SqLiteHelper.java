@@ -455,7 +455,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         contentValues.put(VERIFY_TIME, report.getTime());
         contentValues.put(VERIFY_NOTE, report.getNote());
         String id = report.getId()+"";
-        int rowID = db.update(TBL_VERIFY, contentValues, "id=?", new String[]{id});
+        int rowID = db.update(TBL_VERIFY, contentValues, VERIFY_ID+"=?", new String[]{id});
         db.close();
         return rowID;
     }

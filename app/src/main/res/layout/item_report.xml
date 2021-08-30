@@ -4,9 +4,11 @@
     android:layout_height="wrap_content"
     android:background="@drawable/border_item"
     android:padding="5dp"
+    android:id="@+id/ln_background"
     android:orientation="vertical">
 
     <TextView
+        android:textColor="@color/black"
         android:textSize="17dp"
         android:textStyle="bold"
         android:layout_width="match_parent"
