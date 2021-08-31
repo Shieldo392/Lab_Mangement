@@ -13,6 +13,7 @@ import com.example.lab_management.manage_device.ListDevice;
 import com.example.lab_management.manage_labs.ManageLabs;
 import com.example.lab_management.manage_registerlab.RegisterLabActivity;
 import com.example.lab_management.manage_verify.ListVerify;
+import com.example.lab_management.utils.FakeData;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWidgets();
+        FakeData.Insert_Device(MainActivity.this);
 
         String username = getSharedPreferences("username",MODE_PRIVATE).getString("user_name","");
         hello_user.setText("Xin chào " + username);

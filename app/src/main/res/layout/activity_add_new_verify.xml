@@ -136,6 +136,7 @@
                     android:textColor="@color/black"
                     android:text="Xác nhận thiết bị"/>
                 <ListView
+                    android:scrollbars="vertical"
                     android:id="@+id/lv_device"
                     android:layout_column="1"
                     android:layout_width="250dp"

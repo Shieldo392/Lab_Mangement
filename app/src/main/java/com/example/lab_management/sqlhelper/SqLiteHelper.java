@@ -25,7 +25,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 11;
+    public static final int DB_VERSION = 12;
 
     // tbl_VerifyReport
     public static final String TBL_VERIFY = "verify_report";
