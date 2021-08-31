@@ -89,7 +89,9 @@ public class EditVerify extends AppCompatActivity implements onStatusClick {
             }
             int index_spinenr_maPhong = -1;
             for (int i = 0; i < labs.size(); i++) {
-                if (labs.get(i).equals(report.getLabID()))
+//                if (labs.get(i).equals(report.getLabID()))
+//                    index_spinenr_maPhong = i;
+                if(labs.get(i).getMaPhong()== (report.getLabID()))
                     index_spinenr_maPhong = i;
             }
 
