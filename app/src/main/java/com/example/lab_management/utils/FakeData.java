@@ -106,7 +106,29 @@ public class FakeData {
         deviceList.add(new Device(1,"Chuột acer","Chuột",1,"Tốt","1/1/2020","Không có"));
         deviceList.add(new Device(2,"MH Dell S2421H","Màn hình",3,"Tốt","1/1/2020","Không có"));
         deviceList.add(new Device(3,"MH Dell S2422H","Màn hình",2,"Tốt","1/1/2020","Không có"));
-        deviceList.add(new Device(4,"Case Dell","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 1","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 2","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 3","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 4","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 5","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 6","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 7","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 8","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 9","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 10","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(4,"Case Dell 11","Case",1,"Hỏng","1/1/2019","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 1","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 2","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 3","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 4","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 5","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 6","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 7","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 8","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 9","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 10","Màn hình",2,"Tốt","1/1/2020","Không có"));
+        deviceList.add(new Device(3,"MH Dell S2422H 11","Màn hình",2,"Tốt","1/1/2020","Không có"));
+
         if(sqLiteHelper.Get_Count_Device()<=0){
             for(Device device: deviceList){
                 long result = sqLiteHelper.Insert_Device(device);
