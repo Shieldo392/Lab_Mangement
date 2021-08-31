@@ -53,7 +53,6 @@ public class EditDevice extends AppCompatActivity {
     List<Lab> labs = new ArrayList<>();
 
     LabArrayAdapter adapter_lab;
-    //    Device device;
     List<Device> list = new ArrayList<>();
 
     List<String> loaitb;
@@ -82,8 +81,11 @@ public class EditDevice extends AppCompatActivity {
         if (device == null)
             return;
         int index_spinenr_maPhong = -1;
+
         for (int i = 0; i < labs.size(); i++) {
-            if (labs.get(i).equals(device.getMaPhong()))
+//            if (labs.get(i).equals(device.getMaPhong()))
+//                index_spinenr_maPhong = i;
+            if(labs.get(i).getMaPhong()== (device.getMaPhong()))
                 index_spinenr_maPhong = i;
         }
 
@@ -102,8 +104,6 @@ public class EditDevice extends AppCompatActivity {
         autoTenTb.setText(device.getTenTb());
         editNgayNhap.setText(device.getNgaynhap());
         editGhiChu.setText(device.getGhichu());
-
-
     }
 
     void getSpinnerDat() {
@@ -218,7 +218,6 @@ public class EditDevice extends AppCompatActivity {
     }
 
     void processEdit() {
-
             Lab lab = (Lab) spnTenphong.getSelectedItem();
             Device dv = new Device();
             String tinhTrang = "";
