@@ -53,7 +53,7 @@ public class RegisterLabActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registerlab);
 
         SharedPreferences share = getSharedPreferences("username", MODE_PRIVATE);
-        userID = share.getInt("user_id", 1);
+        userID = share.getInt("user_id", -1);
 
         getWidgets();
 
