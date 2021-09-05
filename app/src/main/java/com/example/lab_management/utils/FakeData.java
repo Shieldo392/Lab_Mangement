@@ -141,8 +141,9 @@ public class FakeData {
     public static void Insert_Subject_Term(Context context){
         SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
         List<Subject> list1 = new ArrayList<>();
-        list1.add(new Subject(1, "Lập trình ăn roi"));
-        list1.add(new Subject(2, "lập trình pờ hắt pừ"));
+        list1.add(new Subject(1, "Phát triển ứng dụng trên thiết bị di động"));
+        list1.add(new Subject(2, "Lập trình PHP"));
+        list1.add(new Subject(3, "Lập trình Java"));
 
         if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_SUBJECT) <= 0){
             for (Subject subject : list1) {
@@ -154,15 +155,16 @@ public class FakeData {
         }
 
         List<Term> list2 = new ArrayList<>();
-        list2.add(new Term(1, "Lớp j đó 1", list1.get(0).getSubjectID()));
-        list2.add(new Term(2, "Lớp j đó 2", list1.get(0).getSubjectID()));
-        list2.add(new Term(3, "Lớp j đó 3", list1.get(1).getSubjectID()));
-        list2.add(new Term(4, "Lớp j đó 4", list1.get(1).getSubjectID()));
+        list2.add(new Term(1, "HP4789 - LT Android", list1.get(0).getSubjectID()));
+        list2.add(new Term(2, "HP5124 - LT Android", list1.get(0).getSubjectID()));
+        list2.add(new Term(3, "HP4886 - LT PHP", list1.get(1).getSubjectID()));
+        list2.add(new Term(4, "HP4921 - LT PHP", list1.get(1).getSubjectID()));
+        list2.add(new Term(5, "HP4886 - LT Java", list1.get(2).getSubjectID()));
+        list2.add(new Term(6, "HP5341 - LT Java", list1.get(2).getSubjectID()));
 
 
         if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_TERM) <= 0){
             for (Term term : list2) {
-                Log.e("AAAAAAA", "Insert_Subject_Term: " + term.getTermID());
                 long result = sqliteHelper.Insert_Term(term);
                 if (result == -1) {
                     Toast.makeText(context, "Them khong thanh cong! Insert_Subject_Term", Toast.LENGTH_SHORT).show();
@@ -177,14 +179,15 @@ public class FakeData {
         SqLiteHelper sqliteHelper = SqLiteHelper.getInstance(context);
         List<RegisterLab> list = new ArrayList<>();
         // int registerID, int labID, int userID, String session, Date time, int termID, Date replaced
-        list.add(new RegisterLab(1, 1, 1, "1, 2, 3", "04/03/2020", 1, "04/03/2020"));
-        list.add(new RegisterLab(2, 1, 1, "4, 5, 6", "04/03/2020", 2, "04/03/2020"));
-        list.add(new RegisterLab(2, 2, 2, "1, 2, 3", "04/03/2020", 3, "04/03/2020"));
-
+        list.add(new RegisterLab(1, 1, 1, "1, 2, 3", "30/07/2021", 1, ""));
+        list.add(new RegisterLab(2, 1, 1, "4, 5, 6", "21/06/2021", 2, ""));
+        list.add(new RegisterLab(3, 2, 2, "1, 2, 3", "05/09/2021", 3, "03/09/2021"));
+        list.add(new RegisterLab(4, 2, 1, "10, 11, 12", "05/09/2021", 3, ""));
+        list.add(new RegisterLab(5, 3, 2, "7, 8, 9", "06/09/2021", 3, "05/09/2021"));
         if (sqliteHelper.GetTableCount(SqLiteHelper.TBL_REGISTERLAB) <= 0){
             for (RegisterLab registerLab : list) {
-                boolean result = sqliteHelper.Insert_RegisterLab(registerLab);
-                if (result) {
+                long result = sqliteHelper.Insert_RegisterLab(registerLab);
+                if (result <= 0) {
                     Toast.makeText(context, "Them khong thanh cong! Insert_RegisterLab", Toast.LENGTH_SHORT).show();
                     System.out.println("Them khong thanh cong! Insert_RegisterLab");
                 }

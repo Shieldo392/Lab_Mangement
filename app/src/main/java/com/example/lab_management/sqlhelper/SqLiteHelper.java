@@ -25,7 +25,7 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
     private static final String TAG= "SQLiteHelper";
     public static final String Database_Name = "Lab_Management";
-    public static final int DB_VERSION = 12;
+    public static final int DB_VERSION = 14;
 
     // tbl_VerifyReport
     public static final String TBL_VERIFY = "verify_report";
@@ -521,9 +521,11 @@ public class SqLiteHelper extends SQLiteOpenHelper {
     }
 
     @SuppressLint("SimpleDateFormat")
-    public boolean Insert_RegisterLab(RegisterLab registerLab){
-        System.err.println(registerLab.getRegisterID() + "+" + registerLab.getLabID() + "+" + registerLab.getTermID() + "+" + registerLab.getTime());
-        System.err.println("AAA: " + registerLab.getTime()+"");
+    public long Insert_RegisterLab(RegisterLab registerLab){
+        if (IsRegisterLabDuplicated(registerLab)) {
+            return -403;
+        }
+
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         //contentValues.put(REGISTERLAB_ID, registerLab.getRegisterID());
@@ -534,16 +536,22 @@ public class SqLiteHelper extends SQLiteOpenHelper {
 
         contentValues.put(TERM_ID, registerLab.getTermID());
 
-        if (registerLab.getReplaced() == null || registerLab.getReplaced().equals("")){
+        if (registerLab.getReplaced() == null || registerLab.getReplaced().equals("")) {
             contentValues.put(REGISTERLAB_REPLACED, "");
-        }
-        else {
+        } else {
             contentValues.put(REGISTERLAB_REPLACED, registerLab.getReplaced());
         }
 
         long rowID = db.insert(TBL_REGISTERLAB, null, contentValues);
         db.close();
-        return rowID >= 0;
+        return rowID;
+    }
+
+    boolean IsRegisterLabDuplicated(RegisterLab registerLab){
+        // check xem phong do da dc dung hay chua
+        String sql = "SELECT * FROM " + TBL_REGISTERLAB + " WHERE " + LAB_ID + " = " + registerLab.getLabID() + " AND " + REGISTERLAB_TIME + " = '" + registerLab.getTime() + "'";
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+        return cursor.getCount() > 0;
     }
 
     @SuppressLint("SimpleDateFormat")
