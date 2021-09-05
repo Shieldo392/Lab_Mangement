@@ -125,6 +125,7 @@ public class RegisterLabAdapter extends ArrayAdapter<RegisterLab> {
         row.findViewById(R.id.subitem_registerlab2).setBackgroundColor(content);
         row.findViewById(R.id.subitem_registerlab3).setBackgroundColor(content);
         row.findViewById(R.id.subitem_registerlab4).setBackgroundColor(content);
+        row.findViewById(R.id.subitem_registerlab5).setBackgroundColor(content);
 
     }
 }

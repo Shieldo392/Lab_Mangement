@@ -30,6 +30,7 @@ import com.example.lab_management.manage_registerlab.adapter.RegisterLabAdapter;
 import com.example.lab_management.objects.Lab;
 import com.example.lab_management.objects.RegisterLab;
 import com.example.lab_management.objects.Term;
+import com.example.lab_management.objects.User;
 import com.example.lab_management.sqlhelper.SqLiteHelper;
 
 import java.text.ParseException;
@@ -51,15 +52,15 @@ public class RegisterLabActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registerlab);
 
+        SharedPreferences share = getSharedPreferences("username", MODE_PRIVATE);
+        userID = share.getInt("user_id", -1);
+
         getWidgets();
 
         setEvents();
         GetData();
 
         refreshDataForListview();
-
-        SharedPreferences share = getSharedPreferences("user", MODE_PRIVATE);
-        userID = share.getInt("user_id", 1);
     }
 
     Spinner spinLab, spinSession, spinTerm;
@@ -117,13 +118,18 @@ public class RegisterLabActivity extends AppCompatActivity {
         else{
             registerLabInfo.setReplaced(null);
         }
-        boolean result = SqLiteHelper.getInstance(RegisterLabActivity.this).Insert_RegisterLab(registerLabInfo);
-        if (result){
+        long result = SqLiteHelper.getInstance(RegisterLabActivity.this).Insert_RegisterLab(registerLabInfo);
+        if (result > 0) {
             Toast.makeText(RegisterLabActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
             curIndexSelected = -1;
         }
         else{
-            Toast.makeText(RegisterLabActivity.this, "Thêm không thành công", Toast.LENGTH_SHORT).show();
+            if (result == -403) {
+                Toast.makeText(RegisterLabActivity.this, "Phòng thực hành đã được đăng ký trước!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(RegisterLabActivity.this, "Thêm không thành công", Toast.LENGTH_SHORT).show();
+            }
         }
         refreshDataForListview();
     }
@@ -192,7 +198,7 @@ public class RegisterLabActivity extends AppCompatActivity {
             labsID.add(lab.getLab_ID());
         });
         //labs = Arrays.asList("Phong_01", "Phong_02", "Phong_03", "PhongLab_1", "PhongLab_2", "HoiThao_1");
-        sessions = Arrays.asList("1, 2, 3", "4, 5, 6", "7, 8, 9", "10, 11, 12", "13, 14, 15", "Thâu đêm");
+        sessions = Arrays.asList("1, 2, 3", "4, 5, 6", "7, 8, 9", "10, 11, 12", "13, 14, 15");
 
         List<Term> termList = SqLiteHelper.getInstance(RegisterLabActivity.this).GetAllTerm();
         Log.i(TAG, "GetData: " + termList.size());
@@ -222,7 +228,7 @@ public class RegisterLabActivity extends AppCompatActivity {
         editTime.setText(todayAsString);
         editReplaced.setText(todayAsString);
     }
-    @RequiresApi(api = Build.VERSION_CODES.N)
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     void setEvents(){
         switchReplaced.setChecked(false);
@@ -278,6 +284,7 @@ public class RegisterLabActivity extends AppCompatActivity {
             // fill
             RegisterLab registerLab = adapterRegisterLab.getItem(position);
             adapterRegisterLab.SetSelectedView(view);
+
 
             // kho vl
             spinLab.setSelection(labsID.indexOf(registerLab.getLabID()));
@@ -350,6 +357,7 @@ public class RegisterLabActivity extends AppCompatActivity {
     void refreshDataForListview(){
         try{
             List<RegisterLab> dangKyList = SqLiteHelper.getInstance(this).GetAllRegisterLabByUserID(userID);
+            System.out.println("AAAAAAAAAAAAAAAAAAAAAAA: " + userID + " = " + dangKyList.size());
             // sort by time
             dangKyList.sort((registerLabLow, registerLabHigh) -> {
                 try {
