@@ -392,8 +392,10 @@ public class SqLiteHelper extends SQLiteOpenHelper {
         if (cursor != null && cursor.moveToFirst()){
             do{
                 User user = new User();
+                int user_id = cursor.getInt(cursor.getColumnIndex(USER_ID));
                 String user_name = cursor.getString(cursor.getColumnIndex(USER_NAME));
                 String password = cursor.getString(cursor.getColumnIndex(USER_PASSWORD));
+                user.setId_user(user_id);
                 user.setUserName(user_name);
                 user.setPassword(password);
                 return user;

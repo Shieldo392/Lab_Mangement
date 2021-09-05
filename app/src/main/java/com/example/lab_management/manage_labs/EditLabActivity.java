@@ -129,7 +129,7 @@ public class EditLabActivity extends AppCompatActivity {
         tv_keyboards = findViewById(R.id.keyboards);
         tv_keyboards_broken = findViewById(R.id.keyboard_broken);
         tv_projectors = findViewById(R.id.projectors);
-        tv_projectors_broken = findViewById(R.id.keyboard_broken);
+        tv_projectors_broken = findViewById(R.id.projector_broken);
 
 
         popupMenu = new PopupMenu(EditLabActivity.this, imv_menu);
